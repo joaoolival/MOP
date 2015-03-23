@@ -27,17 +27,27 @@ public class P03ArraysExtractUniqsAndReps {
 		boolean a1Boolean = true;
 		boolean a2Boolean = true;
 		int[] a2 = new int[5];
-		//int[] uniqArray = new int[5];
+		// int[] uniqArray = new int[5];
 		int[] repArray = new int[5];
+		boolean aux = false;
 
 		for (int i = 0; i < a1.length; i++) {
-			a1[i] = random.nextInt(20);
-			for (int j = 0; j < a1.length; j++) {
-				if ((a1[i] == a1[j]) && (j < i)) {
+			a1[i] = random.nextInt(5);
+			for (int j = 0; j < i; j++) {
+				if ((a1[i] == a1[j])) {
 					while (a1Boolean) {
-						a1[i] = random.nextInt(20);
-						if (a1[i] != a1[j]) {
+						a1[i] = random.nextInt(5);
+						for (int k = 0; k < i; k++) {
+							if (a1[i] == a1[k]) {
+								aux = true;
+							}
+						}
+						if (aux) {
+							aux = false;
+						}
+						else {
 							a1Boolean = false;
+							aux = false;
 						}
 					}
 					a1Boolean = true;
@@ -46,11 +56,11 @@ public class P03ArraysExtractUniqsAndReps {
 		}
 
 		for (int i = 0; i < a2.length; i++) {
-			a2[i] = random.nextInt(20);
-			for (int j = 0; j < a2.length; j++) {
-				if ((a2[i] == a2[j]) && (j < i)) {
+			a2[i] = random.nextInt(5);
+			for (int j = 0; j < i; j++) {
+				if ((a2[i] == a2[j])) {
 					while (a2Boolean) {
-						a2[i] = random.nextInt(20);
+						a2[i] = random.nextInt(5);
 						if (a2[i] != a2[j]) {
 							a2Boolean = false;
 						}
@@ -88,7 +98,7 @@ public class P03ArraysExtractUniqsAndReps {
 		}
 
 		int rep = 0;
-		//int uniq = 0;
+		// int uniq = 0;
 		for (int i = 0; i < a1.length; i++) {
 			for (int j = 0; j < a2.length; j++) {
 				if (a1[i] == a2[j]) {
