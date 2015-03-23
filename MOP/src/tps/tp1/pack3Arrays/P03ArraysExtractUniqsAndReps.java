@@ -29,37 +29,27 @@ public class P03ArraysExtractUniqsAndReps {
 		int[] a2 = new int[5];
 		//int[] uniqArray = new int[5];
 		int[] repArray = new int[5];
-
+		
 		for (int i = 0; i < a1.length; i++) {
-			a1[i] = random.nextInt(20);
-			for (int j = 0; j < a1.length; j++) {
-				if ((a1[i] == a1[j]) && (j < i)) {
-					while (a1Boolean) {
-						a1[i] = random.nextInt(20);
-						if (a1[i] != a1[j]) {
-							a1Boolean = false;
-						}
-					}
-					a1Boolean = true;
+			a1[i] = random.nextInt(5);
+			for (int j = 0; j < i; j++) {
+				if (a1[i] == a1[j]) {
+					a1[i] = random.nextInt(5);
+					j = -1;
 				}
 			}
 		}
-
+		
 		for (int i = 0; i < a2.length; i++) {
-			a2[i] = random.nextInt(20);
-			for (int j = 0; j < a2.length; j++) {
-				if ((a2[i] == a2[j]) && (j < i)) {
-					while (a2Boolean) {
-						a2[i] = random.nextInt(20);
-						if (a2[i] != a2[j]) {
-							a2Boolean = false;
-						}
-					}
-					a2Boolean = true;
+			a1[i] = random.nextInt(5);
+			for (int j = 0; j < i; j++) {
+				if (a2[i] == a2[j]) {
+					a2[i] = random.nextInt(5);
+					j = -1;
 				}
-
 			}
 		}
+		
 		System.out.print("a1 -> ");
 		for (int i = 0; i < a1.length; i++) {
 			// condicao para imprimir o novo array separado por virgulas
