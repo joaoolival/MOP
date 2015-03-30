@@ -18,110 +18,116 @@ public class P03ArraysExtractUniqsAndReps {
 	 * “Random.nextInt(10)” devolve um valor aleatório no intervalo [0..9].
 	 * Exemplo do pretendido: a1 = [2, 6, 8, 4, 9], a2 = [5, 6, 2, 7, 8], array
 	 * de únicos = [4, 9, 5, 7], array de repetidos = [2, 6, 8]. A ordem dos
-	 * elementos nos arrays finais não é relevante.
+	 * elementos nos array s finais não é relevante.
 	 */
 
 	public static void main(String[] args) {
 		Random random = new Random();
 		int[] a1 = new int[5];
-		boolean a1Boolean = true;
-		boolean a2Boolean = true;
 		int[] a2 = new int[5];
 		// int[] uniqArray = new int[5];
-		int[] repArray = new int[5];
-		boolean aux = false;
 
 		for (int i = 0; i < a1.length; i++) {
-			a1[i] = random.nextInt(5);
-			for (int j = 0; j < i; j++) {
-				if ((a1[i] == a1[j])) {
-					while (a1Boolean) {
-						a1[i] = random.nextInt(5);
-						for (int k = 0; k < i; k++) {
-							if (a1[i] == a1[k]) {
-								aux = true;
-							}
-						}
-						if (aux) {
-							aux = false;
-						}
-						else {
-							a1Boolean = false;
-							aux = false;
-						}
-					}
-					a1Boolean = true;
+			a1[i] = random.nextInt(20);
+			for (int j = 0; j < i;) {
+				if (a1[i] == a1[j]) {
+					a1[i] = random.nextInt(20);
+					j = 0;
+				} else {
+					j++;
 				}
 			}
 		}
 
 		for (int i = 0; i < a2.length; i++) {
-			a2[i] = random.nextInt(5);
+			a2[i] = random.nextInt(20);
 			for (int j = 0; j < i; j++) {
-				if ((a2[i] == a2[j])) {
-					while (a2Boolean) {
-						a2[i] = random.nextInt(5);
-						if (a2[i] != a2[j]) {
-							a2Boolean = false;
-						}
-					}
-					a2Boolean = true;
+				if (a2[i] == a2[j]) {
+					a2[i] = random.nextInt(20);
+					j = -1;
 				}
-
 			}
 		}
-		System.out.print("a1 -> ");
-		for (int i = 0; i < a1.length; i++) {
-			// condicao para imprimir o novo array separado por virgulas
-			if (i < a1.length - 1) {
-				System.out.print(a1[i] + ", ");
 
-			} else {
-
-				System.out.println(a1[i]);
-			}
-
-		}
+		// mostrar o array a1
+		System.out.print("a1 -> [");
+		for (int i = 0; i < a1.length; i++) 
+			System.out.print(a1[i] + (i < a1.length - 1 ? ", " : ""));
+		System.out.print("]");
+		                    
 		System.out.println("");
 		System.out.println("");
-		System.out.print("a2 -> ");
-		for (int i = 0; i < a2.length; i++) {
-			// condicao para imprimir o novo array separado por virgulas
-			if (i < a2.length - 1) {
-				System.out.print(a2[i] + ", ");
 
-			} else {
-
-				System.out.println(a2[i]);
-			}
-
-		}
+		System.out.print("a2 -> [");
+		for (int i = 0; i < a2.length; i++) 
+			System.out.print(a2[i] + (i < a2.length - 1 ? ", " : ""));
+		System.out.print("]");
 
 		int rep = 0;
-		// int uniq = 0;
 		for (int i = 0; i < a1.length; i++) {
 			for (int j = 0; j < a2.length; j++) {
 				if (a1[i] == a2[j]) {
-					repArray[rep] = a1[i];
 					rep++;
 				}
 			}
-
 		}
-		System.out.println("");
-		System.out.println("");
-		System.out.print("rep -> ");
-		for (int i = 0; i < repArray.length; i++) {
-			// condicao para imprimir o novo array separado por virgulas
-			if (i < repArray.length - 1) {
-				System.out.print(repArray[i] + ", ");
 
-			} else {
-
-				System.out.print(repArray[i]);
+		int[] repArray = new int[rep];
+		int repIndex = 0;
+		for (int i = 0; i < a1.length; i++) {
+			for (int j = 0; j < a2.length; j++) {
+				if (a1[i] == a2[j]) {
+					repArray[repIndex] = a1[i];
+					repIndex++;
+				}
 			}
-
 		}
+
+		System.out.println("");
+		System.out.println("");
+
+		System.out.print("rep -> [");
+		for (int i = 0; i < repArray.length; i++) 
+			System.out.print(repArray[i] + (i < repArray.length - 1 ? ", " : ""));
+		System.out.println("]");
+		
+		System.out.println("");
+		
+		int uniq = 0;
+		boolean uniqBool = true;
+		for (int i = 0; i < a1.length; i++) {
+			for (int j = 0; j < a2.length; j++) {
+				if (a1[i] == a2[j]) {
+					uniqBool = false;
+				}
+			}
+			if(uniqBool){
+				uniq++;
+			}
+			uniqBool = true;
+		}
+
+		int[] uniqArray = new int[uniq];
+		int uniqIndex = 0;
+		for (int i = 0; i < a1.length; i++) {
+			for (int j = 0; j < a2.length; j++) {
+				if (a1[i] == a2[j]) {
+					uniqBool = false;
+					
+				}
+			}
+			if(uniqBool){
+				uniqArray[uniqIndex] = a1[i];
+				uniqIndex++;	
+			}
+		}
+		
+		System.out.print("uniq -> [");
+		for (int i = 0; i < uniqArray.length; i++) 
+			System.out.print(uniqArray[i] + (i < uniqArray.length - 1 ? ", " : ""));
+		System.out.print("]");
+		
+		
 
 	}
 
