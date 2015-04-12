@@ -1,4 +1,4 @@
-package oldClass;
+package oldClass.tp1;
 
 import java.awt.Component;
 import java.awt.Container;

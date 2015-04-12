@@ -1,4 +1,4 @@
-package oldClass;
+package oldClass.tp1;
 
 public class P01ArrayIntsInit {
 

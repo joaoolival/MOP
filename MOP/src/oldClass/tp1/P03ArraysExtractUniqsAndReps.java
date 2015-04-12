@@ -1,8 +1,8 @@
-package oldClass;
+package oldClass.tp1;
 
 import java.util.Random;
 
-public class P03ArraysExtractUniqsAndRepsOld {
+public class P03ArraysExtractUniqsAndReps {
 
 	/*
 	 * Faça o programa P03ArraysExtractUniqsAndRepsOld que: declare dois arrays de
@@ -25,8 +25,8 @@ public class P03ArraysExtractUniqsAndRepsOld {
 		Random random = new Random();
 		int[] a1 = new int[5];
 		int[] a2 = new int[5];
-		// int[] uniqArray = new int[5];
 
+		// ciclo que que insere valores diferentes aleatorios no array a1
 		for (int i = 0; i < a1.length; i++) {
 			a1[i] = random.nextInt(20);
 			for (int j = 0; j < i;) {
@@ -38,7 +38,7 @@ public class P03ArraysExtractUniqsAndRepsOld {
 				}
 			}
 		}
-
+		// ciclo que que insere valores diferentes aleatorios no array a2
 		for (int i = 0; i < a2.length; i++) {
 			a2[i] = random.nextInt(20);
 			for (int j = 0; j < i; j++) {
@@ -58,11 +58,13 @@ public class P03ArraysExtractUniqsAndRepsOld {
 		System.out.println("");
 		System.out.println("");
 
+		// mostrar o array a2
 		System.out.print("a2 -> [");
 		for (int i = 0; i < a2.length; i++)
 			System.out.print(a2[i] + (i < a2.length - 1 ? ", " : ""));
 		System.out.print("]");
 
+		// ciclo que conta o numero de repeticoes
 		int rep = 0;
 		for (int i = 0; i < a1.length; i++) {
 			for (int j = 0; j < a2.length; j++) {
@@ -72,6 +74,7 @@ public class P03ArraysExtractUniqsAndRepsOld {
 			}
 		}
 
+		// ciclo que insere o valores repetidos num novo array
 		int[] repArray = new int[rep];
 		int repIndex = 0;
 		for (int i = 0; i < a1.length; i++) {
@@ -86,6 +89,7 @@ public class P03ArraysExtractUniqsAndRepsOld {
 		System.out.println("");
 		System.out.println("");
 
+		// ciclo que mostra todas as repeticoes
 		System.out.print("rep -> [");
 		for (int i = 0; i < repArray.length; i++)
 			System.out.print(repArray[i]
@@ -94,62 +98,44 @@ public class P03ArraysExtractUniqsAndRepsOld {
 
 		System.out.println("");
 
+		// ciclo que conta o numero de numeros que nao se repetem
 		int uniq = 0;
 		boolean uniqBool = true;
-		for (int i = 0; i < repArray.length; i++) {
-			for (int j = 0; j < a1.length; j++) {
-				if (repArray[i] == a1[j]) {
-					uniqBool = false;
-				}
-			}
-			if (uniqBool) {
-				uniq++;
-			}
-			uniqBool = true;
-		}
-		
-		uniqBool = true;
-		for (int i = 0; i < repArray.length; i++) {
-			for (int j = 0; j < a2.length; j++) {
-				if (repArray[i] == a2[j]) {
-					uniqBool = false;
-				}
-			}
-			if (uniqBool) {
-				uniq++;
-			}
-			uniqBool = true;
-		}
-		System.out.println(uniq);
-		int[] uniqArray = new int[uniq];
-		int uniqIndex = 0;
+		int[] auxUniq = new int[10];
 		for (int i = 0; i < a1.length; i++) {
-			for (int j = 0; j < repArray.length; j++) {
-				if (a1[i] == repArray[j]) {
+			for (int j = 0; j < a2.length; j++) {
+				if (a1[i] == a2[j]) {
 					uniqBool = false;
 				}
 			}
 			if (uniqBool) {
-				uniqArray[uniqIndex]=a1[i];
-				uniqIndex++;
+				// numeros que nao se repetem sao postos no array auxiliar
+				auxUniq[uniq] = a1[i];
+				uniq++;
 			}
 			uniqBool = true;
 		}
-		
-		for (int i = 0; i < a2.length; i++) {
-			for (int j = 0; j < repArray.length; j++) {
-				if (a2[i] == repArray[j]) {
-					uniqBool = false;
-				}
-			}
-			if (uniqBool) {
-				uniqArray[uniqIndex]=a2[i];
-				uniqIndex++;
-			}
-			uniqBool = true;
-		}
-		
 
+		uniqBool = true;
+		for (int i = 0; i < a2.length; i++) {
+			for (int j = 0; j < a1.length; j++) {
+				if (a2[i] == a1[j]) {
+					uniqBool = false;
+				}
+			}
+			if (uniqBool) {
+				// numeros que nao se repetem sao postos no array auxiliar
+				auxUniq[uniq] = a2[i];
+				uniq++;
+			}
+			uniqBool = true;
+		}
+		// ciclo que insere os valores do array auxiliar num array final
+		int[] uniqArray = new int[uniq];
+		for (int i = 0; i < uniqArray.length; i++) {
+			uniqArray[i] = auxUniq[i];
+		}
+		// show do array final
 		System.out.print("uniq -> [");
 		for (int i = 0; i < uniqArray.length; i++)
 			System.out.print(uniqArray[i]
