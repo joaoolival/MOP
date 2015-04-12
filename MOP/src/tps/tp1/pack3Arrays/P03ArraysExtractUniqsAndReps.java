@@ -51,15 +51,15 @@ public class P03ArraysExtractUniqsAndReps {
 
 		// mostrar o array a1
 		System.out.print("a1 -> [");
-		for (int i = 0; i < a1.length; i++) 
+		for (int i = 0; i < a1.length; i++)
 			System.out.print(a1[i] + (i < a1.length - 1 ? ", " : ""));
 		System.out.print("]");
-		                    
+
 		System.out.println("");
 		System.out.println("");
 
 		System.out.print("a2 -> [");
-		for (int i = 0; i < a2.length; i++) 
+		for (int i = 0; i < a2.length; i++)
 			System.out.print(a2[i] + (i < a2.length - 1 ? ", " : ""));
 		System.out.print("]");
 
@@ -87,47 +87,53 @@ public class P03ArraysExtractUniqsAndReps {
 		System.out.println("");
 
 		System.out.print("rep -> [");
-		for (int i = 0; i < repArray.length; i++) 
-			System.out.print(repArray[i] + (i < repArray.length - 1 ? ", " : ""));
+		for (int i = 0; i < repArray.length; i++)
+			System.out.print(repArray[i]
+					+ (i < repArray.length - 1 ? ", " : ""));
 		System.out.println("]");
-		
+
 		System.out.println("");
-		
+
 		int uniq = 0;
 		boolean uniqBool = true;
+		int[] auxUniq = new int[10];
 		for (int i = 0; i < a1.length; i++) {
 			for (int j = 0; j < a2.length; j++) {
 				if (a1[i] == a2[j]) {
 					uniqBool = false;
 				}
 			}
-			if(uniqBool){
+			if (uniqBool) {
+				auxUniq[uniq] = a1[i];
+				uniq++;
+			}
+			uniqBool = true;
+		}
+
+		uniqBool = true;
+		for (int i = 0; i < a2.length; i++) {
+			for (int j = 0; j < a1.length; j++) {
+				if (a2[i] == a1[j]) {
+					uniqBool = false;
+				}
+			}
+			if (uniqBool) {
+				auxUniq[uniq] = a2[i];
 				uniq++;
 			}
 			uniqBool = true;
 		}
 
 		int[] uniqArray = new int[uniq];
-		int uniqIndex = 0;
-		for (int i = 0; i < a1.length; i++) {
-			for (int j = 0; j < a2.length; j++) {
-				if (a1[i] == a2[j]) {
-					uniqBool = false;
-					
-				}
-			}
-			if(uniqBool){
-				uniqArray[uniqIndex] = a1[i];
-				uniqIndex++;	
-			}
+		for (int i = 0; i < uniqArray.length; i++) {
+			uniqArray[i] = auxUniq[i];
 		}
-		
+
 		System.out.print("uniq -> [");
-		for (int i = 0; i < uniqArray.length; i++) 
-			System.out.print(uniqArray[i] + (i < uniqArray.length - 1 ? ", " : ""));
+		for (int i = 0; i < uniqArray.length; i++)
+			System.out.print(uniqArray[i]
+					+ (i < uniqArray.length - 1 ? ", " : ""));
 		System.out.print("]");
-		
-		
 
 	}
 
