@@ -5,88 +5,105 @@ import java.util.Scanner;
 public class P05Switch {
 
 	public static void main(String[] args) {
-		Scanner keyboard = new java.util.Scanner(System.in);
+		System.out.print("Introduza o número do mês -> ");
+		// ini do Scanner
+		Scanner keyboard = new Scanner(System.in);
 
-		System.out.println("Insert one month number -> ");
+		// ini das variáveis string
+		String strTotalParcial = null;
+		String nomeMes = null;
+		String nomeEstacao = null;
 
-		String monthName = null;
-		String totallyPartly = null;
-		String seasonName = null;
-		boolean error = false;
+		// ini da variável numMes que toma um numero inteiro inserido pelo
+		// utilizador
+		int numMes = keyboard.nextInt();
 
-		int month = keyboard.nextInt();
-		switch (month) {
+		/*
+		 * Se o número inserido pelo utilizador for menor que 1 e maior que 12,
+		 * irá aparecer na consola uma mensagem de erro e o programa termina.
+		 */
+		if ((numMes < 1) || (numMes > 12)) {
+			System.out.println("Erro! O número do mês inserido é inválido! "
+					+ "O programa vai terminar!");
+			keyboard.close();
+			System.exit(1);
+		}
+
+		/*
+		 * Caso o número inteiro inserido esteja entre 1 e 12, o switch irá
+		 * atualizar as variáveis strings de acordo com o valor inserido.
+		 */
+		switch (numMes) {
 		case 1:
-			monthName = "January";
-			totallyPartly = "Totally";
-			seasonName = "Winter";
+			nomeMes = "Janeiro";
+			strTotalParcial = "na totalidade";
+			nomeEstacao = "do Inverno";
 			break;
 		case 2:
-			monthName = "February";
-			totallyPartly = "Totally";
-			seasonName = "Winter";
+			nomeMes = "Fevereiro";
+			strTotalParcial = "na totalidade";
+			nomeEstacao = "do Inverno";
 			break;
 		case 3:
-			monthName = "March";
-			totallyPartly = "Partly";
-			seasonName = "Winter";
+			nomeMes = "Março";
+			strTotalParcial = "principalmente";
+			nomeEstacao = "do Inverno";
 			break;
 		case 4:
-			monthName = "April";
-			totallyPartly = "Totally";
-			seasonName = "Spring";
+			nomeMes = "Abril";
+			strTotalParcial = "na totalidade";
+			nomeEstacao = "da Primavera";
 			break;
 		case 5:
-			monthName = "May";
-			totallyPartly = "Totally";
-			seasonName = "Spring";
+			nomeMes = "Maio";
+			strTotalParcial = "na totalidade";
+			nomeEstacao = "da Primavera";
 			break;
 		case 6:
-			monthName = "June";
-			totallyPartly = "Partly";
-			seasonName = "Spring";
+			nomeMes = "Junho";
+			strTotalParcial = "principalmente";
+			nomeEstacao = "da Primavera";
 			break;
 		case 7:
-			monthName = "July";
-			totallyPartly = "Totally";
-			seasonName = "Summer";
+			nomeMes = "Julho";
+			strTotalParcial = "na totalidade";
+			nomeEstacao = "do Verão";
 			break;
 		case 8:
-			monthName = "August";
-			totallyPartly = "Totally";
-			seasonName = "Summer";
+			nomeMes = "Agosto";
+			strTotalParcial = "na totalidade";
+			nomeEstacao = "do Verão";
 			break;
 		case 9:
-			monthName = "September";
-			totallyPartly = "Partly";
-			seasonName = "Summer";
+			nomeMes = "Setembro";
+			strTotalParcial = "principalmente";
+			nomeEstacao = "do Verão";
 			break;
+
 		case 10:
-			monthName = "October";
-			totallyPartly = "Totally";
-			seasonName = "Fall";
+			nomeMes = "Outubro";
+			strTotalParcial = "na totalidade";
+			nomeEstacao = "do Outono";
 			break;
 		case 11:
-			monthName = "November";
-			totallyPartly = "Totally";
-			seasonName = "Fall";
+			nomeMes = "Novembro";
+			strTotalParcial = "na totalidade";
+			nomeEstacao = "do Outono";
 			break;
 		case 12:
-			monthName = "December";
-			totallyPartly = "Partly";
-			seasonName = "Fall";
-			break;
-		default:
-			monthName = "Please a number between 1 and 12";
-			error = true;
+			nomeMes = "Dezembro";
+			strTotalParcial = "principalmente";
+			nomeEstacao = "do Outono";
 			break;
 		}
 
-		if (error == false) {
-			System.out.println("The month name is " + monthName + ", is "
-					+ totallyPartly + " on " + seasonName);
-			System.out.println();
-		}
+		/*
+		 * Mensagem que irá aparecer na consola com o resultado das variáveis
+		 * strings atualizadas no switch
+		 */
+		System.out.print("O mês " + numMes + " é o mês de " + nomeMes
+				+ " e pertence " + strTotalParcial + " à estação "
+				+ nomeEstacao + ".");
 
 		keyboard.close();
 

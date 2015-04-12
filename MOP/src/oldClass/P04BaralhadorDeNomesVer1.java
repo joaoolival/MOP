@@ -1,4 +1,4 @@
-package tps.tp1.old;
+package oldClass;
 
 import java.util.Scanner;
 

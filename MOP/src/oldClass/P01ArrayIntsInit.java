@@ -1,4 +1,4 @@
-package tps.tp1.pack3Arrays;
+package oldClass;
 
 public class P01ArrayIntsInit {
 
@@ -35,7 +35,7 @@ public class P01ArrayIntsInit {
 			}
 		}
 		System.out.println("]");
-		System.out.println("O menor valor impar é -> " + menorImpar);
+		System.out.println("The lowest odd value is -> " + menorImpar);
 
 		System.out.print("[");
 		// ciclo para incrementar o menor valor impar aos restantes valores

@@ -5,38 +5,45 @@ import java.util.Scanner;
 public class P03Ifs {
 
 	public static void main(String[] args) {
-		String yes = "yes";
+		/*
+		 * Este programa consiste em adivinhar uma letra entre A e F inclusivos
+		 * que o utilizador tenha pensado. Para isso irá fazer perguntas ao
+		 * utilizador de forma a excluir hipóteses e adivinhar por fim a letra
+		 * pensada.
+		 */
+		System.out.println("Pense numa letra de A a F (inclusivos).");
+		System.out
+				.println("  Responda às questões com sim ou nao (sem acentos)");
 
-		Scanner keyboard = new java.util.Scanner(System.in);
+		Scanner keyboard = new Scanner(System.in);
 
-		System.out.println("think a letter between A and F, please awnser with yes or no ");
-		System.out.println("is the letter after C?");
+		System.out.println("O caracter pensado é maior ou igual que C?");
 
-		if (keyboard.next().equals(yes)) {
-			System.out.println("is the letter before F?");
-			if (keyboard.next().equals(yes)) {
-				System.out.println("is the letter before E?");
-				if (keyboard.next().equals(yes)) {
-					System.out.println("is the letter before D?");
-					if (keyboard.next().equals(yes)) {
-						System.out.println("well done, the letter is C");
+		if (keyboard.nextLine().equalsIgnoreCase("sim")) {
+			System.out.println("O caracter pensado é menor que F?");
+			if (keyboard.nextLine().equalsIgnoreCase("sim")) {
+				System.out.println("O caracter pensado é menor que E?");
+				if (keyboard.nextLine().equalsIgnoreCase("sim")) {
+					System.out.println("O caracter pensado é menor que D?");
+					if (keyboard.nextLine().equalsIgnoreCase("sim")) {
+						System.out.println("O caracter pensado é C!");
 					} else {
-						System.out.println("well done, the letter is D");
+						System.out.println("O caracter pensado é D!");
 					}
 				} else {
-					System.out.println("well done, the letter is E");
+					System.out.println("O caracter pensado é E!");
 				}
 			} else {
-				System.out.println("well done, the letter is F");
+				System.out.println("O caracter pensado é F!");
 			}
 		}
 
 		else {
-			System.out.println("the letter is B?");
-			if (keyboard.next().equals(yes)) {
-				System.out.println("well done, the letter is B");
+			System.out.println("O caracter pensado é B?");
+			if (keyboard.nextLine().equalsIgnoreCase("sim")) {
+				System.out.println("O caracter pensado é B!");
 			} else {
-				System.out.println("well done, the letter is A");
+				System.out.println("O caracter pensado é A!");
 
 			}
 

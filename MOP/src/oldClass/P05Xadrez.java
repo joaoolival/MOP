@@ -1,4 +1,4 @@
-package tps.tp1.pack3Arrays;
+package oldClass;
 
 import java.util.Random;
 import java.util.Scanner;
@@ -8,9 +8,9 @@ public class P05Xadrez {
 	public static void main(String[] args) {
 		// init scanner
 		Scanner keyboard = new java.util.Scanner(System.in);
-		// ciclo para repetir tabuleiro
+		//ciclo para repetir tabuleiro
 		while (true) {
-			// tamanho do tabuleiro
+			//tamanho do tabuleiro
 			int size = 8;
 			// inicializacao de um array de 8 por 8
 			char[][] xadrez = new char[size][size];
@@ -142,10 +142,9 @@ public class P05Xadrez {
 			for (int i = 0; i < xadrez.length; i++) {
 				// y
 				for (int j = 0; j < xadrez[i].length; j++) {
-					if (j == 0)
-						System.out.print("| " + xadrez[i][j]);
+					if(j==0)System.out.print("| " + xadrez[i][j]);
 					else
-						System.out.print(" | " + xadrez[i][j]);
+					System.out.print(" | " + xadrez[i][j]);
 				}
 				System.out.print(" |");
 				System.out.println("");

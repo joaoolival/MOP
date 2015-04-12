@@ -1,4 +1,4 @@
-package tps.tp1.pack2Ciclos;
+package oldClass;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -151,13 +151,12 @@ public class P03ColorFrame extends JFrame {
 			// for para iterativamente ir mudando de cor
 			for (int i = 0; i < dimX; i++) {
 
-				// inicialização de uma cor que irá ser mudada ao longo do ciclo
-				// for
+				// inicializacao de uma cor que ira ser mudada ao longo do for
 				Color auxColor = new Color((int) red, (int) green, (int) blue);
 				g.setColor(auxColor);
 				g.drawLine(i, 0, i, dimY);
 
-				// actualização dos níveis rgb de cada cor
+				// actualizacao dos niveis rgb de cada cor
 				red += deltaRed / dimX;
 				green += deltaGreen / dimX;
 				blue += deltaBlue / dimX;

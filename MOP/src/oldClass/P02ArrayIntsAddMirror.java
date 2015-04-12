@@ -1,4 +1,4 @@
-package tps.tp1.pack3Arrays;
+package oldClass;
 
 import java.util.Scanner;
 
@@ -10,7 +10,7 @@ public class P02ArrayIntsAddMirror {
 		int aux = myArray.length - 1;
 		int auxValue = 0;
 
-		System.out.println("Insira 10 inteiros entre 10 e 99");
+		System.out.println("Please insert 10 integer number between 10 and 99");
 		// ciclo para certificar os 10 valores do array
 		for (int i = 0; i < myArray.length; i++) {
 			int keyboardValue = keyboard.nextInt();
@@ -20,7 +20,8 @@ public class P02ArrayIntsAddMirror {
 				// reiniciar for em caso de erro de valor
 			} else {
 				i = -1;
-				System.out.println("Erro! por favor insira os valores de novo");
+				System.out
+						.println("Error! Please insert again all the Values between 10 and 99");
 			}
 		}
 		// ciclo para ser impresso o array separado por virgulas
