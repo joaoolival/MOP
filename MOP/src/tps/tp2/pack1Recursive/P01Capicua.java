@@ -6,7 +6,8 @@ public class P01Capicua {
 	 * Main
 	 */
 	public static void main(String[] args) {
-
+		System.out.println(3592/10);
+		
 		int n = 1;
 		int res = getLastDigit(n);
 		System.out.println("getLastDigit of " + n + "  = " + res);
@@ -73,9 +74,8 @@ public class P01Capicua {
 		if (num < 0)
 			throw new IllegalArgumentException("Argumento de valor negativo: "
 					+ num);
-
-		// TODO
-		return 0;
+		if(num < 10) return num;
+		return getLastDigit(num/10);
 	}
 
 	/**
@@ -87,8 +87,10 @@ public class P01Capicua {
 			throw new IllegalArgumentException("Argumento de valor negativo: "
 					+ num);
 
-		// TODO
-		return 0;
+		if (num < 10) return 0;
+	
+		
+		return ((num%10) + remLastDigit(num/10)*10);
 	}
 
 	/**
@@ -96,13 +98,17 @@ public class P01Capicua {
 	 * número que lido da frente para trás é o mesmo número que lido em sentido
 	 * inverso. Este método deve utilizar os outros na sua implementação.
 	 */
+	// 26562
 	public static boolean isCapicua(int num) {
 		if (num < 0)
 			throw new IllegalArgumentException("Argumento de valor negativo: "
 					+ num);
-
-		// TODO
-		return false;
+		if(num < 10) return true;
+		
+		if(getLastDigit(num) != num%10){
+			return false;
+		}
+		return isCapicua(remLastDigit(num)/10);
 	}
 
 }
