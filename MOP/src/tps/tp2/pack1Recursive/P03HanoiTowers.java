@@ -189,7 +189,7 @@ public class P03HanoiTowers {
 	 *            , the final rod/pole for this movement
 	 * @param auxRod
 	 *            , the auxiliary rod/pole for this movement
-	 *            
+	 * 
 	 * @return the number of movements
 	 * @throws InterruptedException
 	 */
@@ -198,11 +198,11 @@ public class P03HanoiTowers {
 		// ======================================================
 		// TODO ESTE É O ÚNICO MÉTODO QUE DEVEM ALTERAR
 		// ======================================================
-		
+
 		// não alterar as duas linhas seguintes
 		if (!isActive)
 			cancelExecution();
-
+		
 		if (nDiscs == 1) {
 			Disc p = startRod.remDisc();
 			endRod.addDisc(p);
@@ -210,8 +210,16 @@ public class P03HanoiTowers {
 			Thread.sleep(movementsDelay);
 			return 1;
 		}
-
-		moveHanoiDiscs(1, startRod, endRod, startRod);
+		// metodo chamado para passar todo os discos menos o ultimo para a
+		// segunda parcela usando a ultima como auxiliar
+		moveHanoiDiscs(nDiscs - 1, startRod, auxRod, endRod);
+		// zona do codigo onde se retira o disco que falta na primeira parcela
+		// para a ultima parcela
+		Disc p = startRod.remDisc();
+		endRod.addDisc(p);
+		// metodo chamado para passar todos os discos que estao na segunda
+		// parcela para a terceira usando a primeira como auxiliar
+		moveHanoiDiscs(nDiscs - 1, auxRod, endRod, startRod);
 		return 1;
 	}
 
