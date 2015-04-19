@@ -43,7 +43,7 @@ public class P02ArraysSymmetric {
 		System.out.println("isSymmetric of " + Arrays.toString(n) + "  = "
 				+ res3);
 
-		n = new char[] { 'a', 'b', 'a' };
+		n = new char[] { 'a', 'b','a' };
 		res3 = isSymmetric(n);
 		System.out.println("isSymmetric of " + Arrays.toString(n) + "  = "
 				+ res3);
@@ -80,9 +80,12 @@ public class P02ArraysSymmetric {
 		if (array == null || array.length == 0)
 			throw new NullPointerException();
 
-		// TODO
-		return '-';
+		if(array.length == 1) return array[0];
+		
+		return getLastElement(Arrays.copyOfRange(array,1,array.length));
 	}
+
+
 
 	/**
 	 * Devolve verdadeiro se o array recebido for simétrico, ou seja, é um array
@@ -94,9 +97,11 @@ public class P02ArraysSymmetric {
 		if (array == null)
 			throw new NullPointerException("Null argument.");
 
-		// true if length is 0 or 1
+		if (array.length < 2) return true;
 		
-		// TODO
-		return false;
+		if(array[0] != getLastElement(array))
+			return false;
+		
+		return isSymmetric(Arrays.copyOfRange(array, 1, array.length-1));
 	}
 }
