@@ -215,11 +215,11 @@ public class P03HanoiTowers {
 		moveHanoiDiscs(nDiscs - 1, startRod, auxRod, endRod);
 		// zona do codigo onde se retira o disco que falta na primeira parcela
 		// para a ultima parcela
-		Disc p = startRod.remDisc();
-		endRod.addDisc(p);
+		moveHanoiDiscs(1, startRod, endRod,auxRod);
+		moveHanoiDiscs(nDiscs-1, auxRod,endRod,startRod);
 		// metodo chamado para passar todos os discos que estao na segunda
 		// parcela para a terceira usando a primeira como auxiliar
-		moveHanoiDiscs(nDiscs - 1, auxRod, endRod, startRod);
+		//moveHanoiDiscs(nDiscs - 1, auxRod, endRod, startRod);
 		return 1;
 	}
 
