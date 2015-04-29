@@ -1,0 +1,45 @@
+#############################################################################################
+Main de PercursoSimples:
+
+ps1 -> A2 de Lisboa para Faro, com 278000 metros e com 0 de declive
+ps2 -> A1 de Lisboa para Porto, com 317000 metros e com 0 de declive
+ps1.equals(ps2) -> false
+ps1 toString -> A2 de Lisboa para Faro, com 278000 metros e com 0 de declive
+
+
+#############################################################################################
+Main de PercursoComposto:
+
+> NORTE_SUL de Faro para Porto, com 595000 metros, com 0 de declive e com 2 percursos
+   > A2 de Faro para Lisboa, com 278000 metros e com 0 de declive
+   > A1 de Lisboa para Porto, com 317000 metros e com 0 de declive
+
+> NORTE_SUL de Faro para Viana Do Castelo, com 668800 metros, com 0 de declive e com 3 percursos
+   > A2 de Faro para Lisboa, com 278000 metros e com 0 de declive
+   > A1 de Lisboa para Porto, com 317000 metros e com 0 de declive
+   > A1 de Porto para Viana Do Castelo, com 73800 metros e com 0 de declive
+
+A adição de A1 de Porto para Viana Do Castelo, com 73800 metros e com 0 de declive deu -> true
+
+> NORTE_SUL de Sagres para Viana Do Castelo, com 735800 metros, com 0 de declive e com 4 percursos
+   > A23 de Sagres para Faro, com 67000 metros e com 0 de declive
+   > A2 de Faro para Lisboa, com 278000 metros e com 0 de declive
+   > A1 de Lisboa para Porto, com 317000 metros e com 0 de declive
+   > A1 de Porto para Viana Do Castelo, com 73800 metros e com 0 de declive
+
+Clone:
+> NORTE_SUL de Sagres para Viana Do Castelo, com 735800 metros, com 0 de declive e com 4 percursos
+   > A23 de Sagres para Faro, com 67000 metros e com 0 de declive
+   > A2 de Faro para Lisboa, com 278000 metros e com 0 de declive
+   > A1 de Lisboa para Porto, com 317000 metros e com 0 de declive
+   > A1 de Porto para Viana Do Castelo, com 73800 metros e com 0 de declive
+
+> NORTE_SUL de Sagres para Lisboa, com 345000 metros, com 0 de declive e com 2 percursos
+   > A23 de Sagres para Faro, com 67000 metros e com 0 de declive
+   > A2 de Faro para Lisboa, com 278000 metros e com 0 de declive
+Percursos removidos -> [A1 de Lisboa para Porto, com 317000 metros e com 0 de declive, A1 de Porto para Viana Do Castelo, com 73800 metros e com 0 de declive]
+
+> NORTE_SUL de Lisboa para Viana Do Castelo, com 390800 metros, com 0 de declive e com 2 percursos
+   > A1 de Lisboa para Porto, com 317000 metros e com 0 de declive
+   > A1 de Porto para Viana Do Castelo, com 73800 metros e com 0 de declive
+Percursos removidos -> [A23 de Sagres para Faro, com 67000 metros e com 0 de declive, A2 de Faro para Lisboa, com 278000 metros e com 0 de declive]
