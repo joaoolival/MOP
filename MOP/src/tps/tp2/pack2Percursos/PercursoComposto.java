@@ -97,18 +97,14 @@ public class PercursoComposto {
 	 *            Percurso a copiar
 	 */
 	public PercursoComposto(PercursoComposto pc) {
-		this(pc.nome, pc.percursos, pc.nPercursos);
+		this(pc.nome, Arrays.copyOfRange(pc.percursos, 0, pc.nPercursos), pc.percursos.length);
 	}
 
 	/**
 	 * Deve criar uma cópia profunda do percurso corrente
 	 */
 	public PercursoComposto clone() {
-		PercursoSimples[] auxPercursos = new PercursoSimples[nPercursos];
-		for (int i = 0; i < auxPercursos.length; i++) {
-			auxPercursos[i] = percursos[i];
-		}
-		return new PercursoComposto(nome, auxPercursos, percursos.length);
+		return new PercursoComposto(nome, Arrays.copyOfRange(percursos, 0, nPercursos), percursos.length);
 	}
 
 	/**
