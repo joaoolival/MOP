@@ -104,7 +104,11 @@ public class PercursoComposto {
 	 * Deve criar uma cópia profunda do percurso corrente
 	 */
 	public PercursoComposto clone() {
-		return new PercursoComposto(this.nome, this.percursos, this.nPercursos);
+		PercursoSimples[] auxPercursos = new PercursoSimples[nPercursos];
+		for (int i = 0; i < auxPercursos.length; i++) {
+			auxPercursos[i] = percursos[i];
+		}
+		return new PercursoComposto(nome, auxPercursos, percursos.length);
 	}
 
 	/**
@@ -269,8 +273,11 @@ public class PercursoComposto {
 	 * @return A distância do percurso
 	 */
 	public int getDistancia() {
-		// TODO
-		return 0;
+		int distancia = 0;
+		for (int i = 0; i < nPercursos; i++) {
+			distancia += percursos[i].getDistancia();
+		}
+		return distancia;
 	}
 
 	/**
@@ -280,8 +287,11 @@ public class PercursoComposto {
 	 * @return O declive do percurso
 	 */
 	public int getDeclive() {
-		// TODO
-		return 0;
+		int declive = 0;
+		for (int i = 0; i < nPercursos; i++) {
+			declive += percursos[i].getDeclive();
+		}
+		return declive;
 	}
 
 	/**
@@ -292,8 +302,12 @@ public class PercursoComposto {
 	 *         positivos
 	 */
 	public int getSubidaAcumulada() {
-		// TODO
-		return 0;
+		int declive = 0;
+		for (int i = 0; i < nPercursos; i++) {
+			if(percursos[i].getDeclive() >=0){ 
+				declive += percursos[i].getDeclive();}
+		}
+		return declive;
 	}
 
 	/**
@@ -377,22 +391,23 @@ public class PercursoComposto {
 		pc1.print("> ");
 		System.out.println();
 
-		// clone System.out.println("Clone:"); PercursoComposto pc2 =
-		pc1.clone();
+		// clone
+		System.out.println("Clone:");
+		PercursoComposto pc2 = pc1.clone();
 		pc1.print("> ");
 		System.out.println();
 
-		// removerPercursosNoFim PercursoSimples[] psx =
-		pc1.removerPercursosNoFimDesde("Lisboa");
+		// removerPercursosNoFim
+		PercursoSimples[] psx = pc1.removerPercursosNoFimDesde("Lisboa");
 		pc1.print("> ");
-		//System.out.println("Percursos removidos -> " + Arrays.toString(psx));
+		System.out.println("Percursos removidos -> " + Arrays.toString(psx));
 		System.out.println();
 
 		// removerPercursosNoInicio
 
-		//PercursoSimples[] psx2 = pc2.removerPercursosNoInicioAte("Lisboa");
-		//pc2.print("> ");
-		//System.out.println("Percursos removidos -> " + Arrays.toString(psx2));
+		PercursoSimples[] psx2 = pc2.removerPercursosNoInicioAte("Lisboa");
+		pc2.print("> ");
+		System.out.println("Percursos removidos -> " + Arrays.toString(psx2));
 
 		System.out
 				.println("-----------------------------Meu teste---------------------------------");
