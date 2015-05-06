@@ -2,6 +2,8 @@ package tps.tp2.pack3PercursosComPercursos;
 
 import java.util.Arrays;
 
+import tps.tp2.pack2Percursos.PercursoSimples;
+
 /**
  * Classe que suporta um percurso composto por vários percursos simples ou
  * compostos. A classe tem de ter pelo menos um percurso. Não admite localidades
@@ -54,7 +56,8 @@ public class PercursoComposto {
 	 */
 	public PercursoComposto(String nome, PercursoSimples percursoSimples,
 			int maxPercursos) {
-		// TODO
+		this(nome, new PercursoSimples[] { percursoSimples }, maxPercursos);
+
 	}
 
 	/**
@@ -70,7 +73,7 @@ public class PercursoComposto {
 	 */
 	public PercursoComposto(String nome, PercursoComposto percursoComposto,
 			int maxPercursos) {
-		// TODO
+		this(nome, new PercursoComposto[] { percursoComposto }, maxPercursos);
 	}
 
 	/**
@@ -88,7 +91,7 @@ public class PercursoComposto {
 	 */
 	public PercursoComposto(String nome, PercursoSimples[] percursosSimples,
 			int maxPercursos) {
-		// TODO
+		this(nome, percursosSimples, new PercursoComposto[] {}, maxPercursos);
 	}
 
 	/**
@@ -107,14 +110,14 @@ public class PercursoComposto {
 	 */
 	public PercursoComposto(String nome, PercursoComposto[] percursosCompostos,
 			int maxPercursos) {
-		// TODO
+		this(nome, new PercursoSimples[] {}, percursosCompostos, maxPercursos);
 	}
 
 	/**
 	 * Constructor que recebe um array percursos simples e um array de percursos
 	 * compostos, além do nome e do nº máximo de percursos. Os array têm de ter
 	 * no conjunto pelo menos um percurso simples. Os percursos simples
-	 * recenidos no array consideram-se como ficanado antes dos percursos
+	 * recebidos no array consideram-se como ficando antes dos percursos
 	 * compostos recebidos no array e têm de estar em sequência e não pode haver
 	 * repetições de localidades sob nenhuma forma. Considera-se que os
 	 * percursos compostos recebidos, em si, estão bem formados. Sugestão:
@@ -132,7 +135,42 @@ public class PercursoComposto {
 	 */
 	public PercursoComposto(String nome, PercursoSimples[] percursosSimples,
 			PercursoComposto[] percursosCompostos, int maxPercursos) {
-		// TODO
+		if (!(PercursoSimples.validarNomeDeLocal(nome)))
+			throw new IllegalArgumentException("Nome inválido -> " + nome);
+
+		if (percursosSimples.length + percursosCompostos.length <= 1) {
+			if (percursosSimples.length != 1)
+				throw new IllegalArgumentException(
+						"Tem de ter pelo menos um percurso simples");
+		}
+
+		for (int i = 0; i < percursosSimples.length; i++) {
+			if (percursosSimples[i] == null)
+				throw new IllegalArgumentException(
+						"Array de percursos inválido pois contem nulls -> "
+								+ percursosSimples);
+			if (i < (percursosSimples.length - 1)
+					&& (percursosSimples[i].getFim() != percursosSimples[i + 1]
+							.getInicio()))
+				throw new IllegalArgumentException(
+						"Array de percursos inválido nao esta em sequencia -> "
+								+ percursosSimples);
+
+		}
+		
+		for (int i = 0; i < percursosCompostos.length; i++) {
+			if (percursosCompostos[i] == null)
+				throw new IllegalArgumentException(
+						"Array de percursos inválido pois contem nulls -> "
+								+ percursosCompostos);
+		}
+		
+		if(percursosSimples[percursosSimples.length - 1].getFim() != percursosCompostos[0].getInicio()){
+			throw new IllegalArgumentException(
+					"Array de percursos simples nao coincide com  percursos compostos pois nao esta em sequencia -> "
+							+ percursosSimples + percursosCompostos);
+		}
+
 	}
 
 	/**

@@ -1,12 +1,6 @@
 package tps.tp2.pack3PercursosComPercursos;
 
-/**
- * Classe que suporta um percurso simples
- * 
- * ATENÇÂO: esta classe deve ser substituída pela classe feita por vós no
- * package 2. Aqui não é necessário fazer nada (se ela já estiver feita).
- *
- */
+
 public class PercursoSimples {
 
 	/**
@@ -55,8 +49,25 @@ public class PercursoSimples {
 	 */
 	public PercursoSimples(String nome, String inicio, String fim,
 			int distancia, int declive) {
+		if (!validarNomeDeLocal(nome))
+			throw new IllegalArgumentException("Nome inválido -> " + nome);
 
-		// TODO
+		if (!validarNomeDeLocal(inicio))
+			throw new IllegalArgumentException("Nome de Inicio inválido -> "
+					+ inicio);
+
+		if (!validarNomeDeLocal(fim))
+			throw new IllegalArgumentException("Nome de Fim inválido -> " + fim);
+
+		if (distancia <= 0)
+			throw new IllegalArgumentException("Distania inválida -> "
+					+ distancia);
+
+		this.nome = nome;
+		this.inicio = inicio;
+		this.fim = fim;
+		this.distancia = distancia;
+		this.declive = declive;
 	}
 
 	/**
@@ -67,7 +78,7 @@ public class PercursoSimples {
 	 *            O percurso a copiar
 	 */
 	public PercursoSimples(PercursoSimples p) {
-		// TODO
+		this(p.getNome(),p.getInicio(),p.getFim(),p.getDistancia(),p.getDeclive());
 	}
 
 	/**
@@ -76,8 +87,7 @@ public class PercursoSimples {
 	 * @return O novo percurso idêntico ao corrente
 	 */
 	public PercursoSimples clone() {
-		// TODO
-		return null;
+		return new PercursoSimples(this.getNome(),this.getInicio(),this.getFim(),this.getDistancia(),this.getDeclive());
 	}
 
 	/**
@@ -88,59 +98,39 @@ public class PercursoSimples {
 	 *            Nome a validar
 	 * @return True se o nome for válido
 	 */
-	private static boolean validarNomeDeLocal(String nome) {
-		// TODO
-		return false;
+	public static boolean validarNomeDeLocal(String nome) {
+		if (nome.length() < 2)
+			return false;
+		if (!(Character.isLetter(nome.charAt(0))))
+			return false;
+		boolean valido = true;
+		for (int i = 1; i < nome.length(); i++) {
+			if (!(Character.isLetter(nome.charAt(i))
+					|| Character.isDigit(nome.charAt(i)) || nome.charAt(i) == ' ' || nome.charAt(i) == '_')) {
+				valido = false;
+			}
+		}
+		return valido;
 	}
 
-	/**
-	 * Devolve o nome do percurso
-	 * 
-	 * @return O nome do percurso
-	 */
 	public String getNome() {
-		// TODO
-		return null;
+		return nome;
 	}
 
-	/**
-	 * Devolve o local de início do percurso
-	 * 
-	 * @return O local de início do percurso
-	 */
 	public String getInicio() {
-		// TODO
-		return null;
+		return inicio;
 	}
 
-	/**
-	 * Devolve o local de fim do percurso
-	 * 
-	 * @return O local de fim do percurso
-	 */
 	public String getFim() {
-		// TODO
-		return null;
+		return fim;
 	}
 
-	/**
-	 * Devolve a distância do percurso
-	 * 
-	 * @return a distância do percurso
-	 */
 	public int getDistancia() {
-		// TODO
-		return 0;
+		return distancia;
 	}
 
-	/**
-	 * Devolve o declive do percurso
-	 * 
-	 * @return O declive do percurso
-	 */
 	public int getDeclive() {
-		// TODO
-		return 0;
+		return declive;
 	}
 
 	/**
@@ -150,8 +140,8 @@ public class PercursoSimples {
 	 * @return A string que descreve o percurso
 	 */
 	public String toString() {
-		// TODO
-		return null;
+		return nome + " de " + inicio + " para " + fim + ", com " + distancia
+				+ " metros e com " + declive + " de declive ";
 	}
 
 	/**
@@ -164,8 +154,11 @@ public class PercursoSimples {
 	 *         o percurso recebido
 	 */
 	public boolean equals(PercursoSimples percurso) {
-		// TODO
-		return false;
+		if (this == percurso) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -176,7 +169,7 @@ public class PercursoSimples {
 	 *            Prefixo a colocar antes da informação do toString
 	 */
 	public void print(String prefix) {
-		// TODO
+		System.out.println(prefix + this.toString());
 	}
 
 	/**
@@ -199,6 +192,18 @@ public class PercursoSimples {
 		System.out.println("ps1.equals(ps2) -> " + ps1ps2);
 
 		System.out.println("ps1 toString -> " + ps1);
+		
+		/*
+		PercursoSimples ps3 = new PercursoSimples(ps1);
+		ps3.print("ps3 -> ");
+		
+		PercursoSimples ps4 = ps1.clone();
+		ps4.print("ps4 -> ");
+		*/
+		
+		
+		
+		
 	}
 
 }
@@ -206,8 +211,8 @@ public class PercursoSimples {
 // output esperado
 
 /*
- * ps1 -> A2 de Lisboa para Faro, com 278000 metros e com 0 de declive ps2 -> A1
- * de Lisboa para Porto, com 317000 metros e com 0 de declive ps1.equals(ps2) ->
- * false ps1 toString -> A2 de Lisboa para Faro, com 278000 metros e com 0 de
- * declive
+ * ps1 -> A2 de Lisboa para Faro, com 278000 metros e com 0 de declive 
+ * ps2 -> A1 de Lisboa para Porto, com 317000 metros e com 0 de declive 
+ * ps1.equals(ps2) -> false 
+ * ps1 toString -> A2 de Lisboa para Faro, com 278000 metros e com 0 de declive
  */
