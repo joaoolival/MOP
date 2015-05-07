@@ -118,9 +118,9 @@ public class PercursoComposto {
 	 * compostos, além do nome e do nº máximo de percursos. Os array têm de ter
 	 * no conjunto pelo menos um percurso simples. Os percursos simples
 	 * recebidos no array consideram-se como ficando antes dos percursos
-	 * compostos recebidos no array e têm de estar em sequência e FALTA não pode haver
-	 * repetições de localidades sob nenhuma forma FALTA. Considera-se que os
-	 * percursos compostos recebidos, em si, estão bem formados. Sugestão:
+	 * compostos recebidos no array e têm de estar em sequência e FALTA não pode
+	 * haver repetições de localidades sob nenhuma forma FALTA. Considera-se que
+	 * os percursos compostos recebidos, em si, estão bem formados. Sugestão:
 	 * chamar os métodos de adicionar no final.
 	 * 
 	 * @param nome
@@ -138,8 +138,8 @@ public class PercursoComposto {
 		if (!(PercursoSimples.validarNomeDeLocal(nome)))
 			throw new IllegalArgumentException("Nome inválido -> " + nome);
 
-		if (percursosSimples.length + percursosCompostos.length <= 1) {
-			if (percursosSimples.length != 1)
+		if (percursosCompostos.length == 0) {
+			if (percursosSimples.length == 0)
 				throw new IllegalArgumentException(
 						"Tem de ter pelo menos um percurso simples");
 		}
@@ -156,23 +156,37 @@ public class PercursoComposto {
 						"Array de percursos simples inválido, nao esta em sequencia -> "
 								+ percursosSimples);
 		}
-		
+
 		for (int i = 0; i < percursosCompostos.length; i++) {
 			if (percursosCompostos[i] == null)
 				throw new IllegalArgumentException(
 						"Array de percursos compostos inválido, contem nulls -> "
 								+ percursosCompostos);
 		}
-		
-		if(percursosCompostos.length > 0 && (percursosSimples[percursosSimples.length - 1].getFim() != percursosCompostos[0].getInicio())){
+
+		if (percursosSimples.length > 0
+				&& percursosCompostos.length > 0
+				&& (percursosSimples[percursosSimples.length - 1].getFim() != percursosCompostos[0].percursosSimples[0]
+						.getInicio())) {
 			throw new IllegalArgumentException(
 					"Array de percursos simples nao coincide com  percursos compostos pois nao esta em sequencia -> "
 							+ percursosSimples + percursosCompostos);
 		}
-		
+
 		this.nome = nome;
 		this.nPercursosSimples = percursosSimples.length;
 		this.nPercursosCompostos = percursosCompostos.length;
+
+		// cria array com o max tamanho
+		PercursoSimples[] percursosFullLength = new PercursoSimples[maxPercursos];
+		System.arraycopy(percursosSimples, 0, percursosFullLength, 0,
+				percursosSimples.length);
+		this.percursosSimples = percursosFullLength;
+
+		PercursoComposto[] percursosCompostosFullLength = new PercursoComposto[maxPercursos];
+		System.arraycopy(percursosCompostos, 0, percursosCompostosFullLength,
+				0, percursosCompostos.length);
+		this.percursosCompostos = percursosCompostosFullLength;
 
 	}
 
@@ -183,7 +197,7 @@ public class PercursoComposto {
 	 *            Percurso a copiar
 	 */
 	public PercursoComposto(PercursoComposto pc) {
-		//this(pc.nome, pc.percursos, pc.nPercursos);
+		// this(pc.nome, pc.percursos, pc.nPercursos);
 	}
 
 	/**
@@ -267,8 +281,18 @@ public class PercursoComposto {
 	 *         composto
 	 */
 	private int getNumLocalidades() {
-		// TODO
-		return 0;
+		// um percursos simples bem formado nao repete localidades
+		int aux = nPercursosSimples > 0 ? nPercursosSimples + 1 : 0;
+		if (nPercursosCompostos > 0) {
+			for (int i = 0; i < nPercursosCompostos; i++) {
+				// ternario pois no primeiro percurso composto nao e preciso
+				// contar a primeira localidade pois ja esta contabilizada nos
+				// simples
+				aux += i < 1 ? percursosCompostos[i].nPercursosSimples
+						: percursosCompostos[i].nPercursosSimples + 1;
+			}
+		}
+		return aux;
 	}
 
 	/**
@@ -460,6 +484,7 @@ public class PercursoComposto {
 				20);
 		pc4.print("> ");
 		System.out.println();
+		System.out.println(pc4.getNumLocalidades());
 
 		// =====================================================================
 		System.out.println(strSeparator);
