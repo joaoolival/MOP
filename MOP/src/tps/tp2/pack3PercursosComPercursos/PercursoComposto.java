@@ -133,6 +133,7 @@ public class PercursoComposto {
 	 */
 	public PercursoComposto(String nome, PercursoSimples[] percursosSimples,
 			PercursoComposto[] percursosCompostos, int maxPercursos) {
+		// se vier a null guardar o o array com o o tamanho max
 		if (!(PercursoSimples.validarNomeDeLocal(nome)))
 			throw new IllegalArgumentException("Nome inválido -> " + nome);
 
@@ -225,16 +226,18 @@ public class PercursoComposto {
 	 * @return True se adicionou
 	 */
 	public boolean addicionarPercursoSimplesNoFinal(PercursoSimples percurso) {
-		//se houver percursos compostos da false
+		// se houver percursos compostos da false
 		if (nPercursosCompostos > 0)
 			return false;
-		//se houverem repeticoes ou nao tiver em sequencia da false
+		// se houverem repeticoes ou nao tiver em sequencia da false
 		if (haveRepetitions(getLocalidades(),
 				new String[] { percurso.getFim() })
 				|| getLocalidades()[getNumLocalidades() - 1] != percurso
 						.getInicio())
 			return false;
-		//caso nao retorne false actualiza o array e o numero de percursos
+		if (nPercursosSimples == percursosSimples.length)
+			return false;
+		// caso nao retorne false actualiza o array e o numero de percursos
 		percursosSimples[nPercursosSimples] = percurso;
 		nPercursosSimples++;
 		return true;
@@ -251,8 +254,16 @@ public class PercursoComposto {
 	 * @return True se adicionou
 	 */
 	public boolean addicionarPercursoCompostoNoFinal(PercursoComposto percurso) {
-		// TODO
-		return false;
+		if (!(getFim().equals(percurso.getInicio())))
+			return false;
+		if (haveRepetitions(
+				getLocalidades(),
+				Arrays.copyOfRange(percurso.getLocalidades(), 1,
+						(percurso.getLocalidades().length))))
+			return false;
+		percursosCompostos[nPercursosCompostos]=percurso;
+		nPercursosCompostos++;
+		return true;
 	}
 
 	/**
@@ -302,6 +313,9 @@ public class PercursoComposto {
 
 		if (nPercursosCompostos > 0) {
 			for (int i = 0; i < nPercursosCompostos; i++) {
+				aux[intAux] = percursosCompostos[i].percursosSimples[0]
+						.getInicio();
+				intAux++;
 				for (int j = 0; j < percursosCompostos[i].nPercursosSimples; j++) {
 					aux[intAux] = percursosCompostos[i].percursosSimples[j]
 							.getFim();
@@ -323,14 +337,11 @@ public class PercursoComposto {
 	 */
 	private int getNumLocalidades() {
 		// um percursos simples bem formado nao repete localidades
+		// operador ternario caso nao existam percursos simples
 		int aux = nPercursosSimples > 0 ? nPercursosSimples + 1 : 0;
 		if (nPercursosCompostos > 0) {
 			for (int i = 0; i < nPercursosCompostos; i++) {
-				// ternario pois no primeiro percurso composto nao e preciso
-				// contar a primeira localidade pois ja esta contabilizada nos
-				// simples
-				aux += i < 1 ? percursosCompostos[i].nPercursosSimples
-						: percursosCompostos[i].nPercursosSimples + 1;
+				aux += percursosCompostos[i].getNumLocalidades();
 			}
 		}
 		return aux;
@@ -346,8 +357,20 @@ public class PercursoComposto {
 	 * @return True se adicionou, ou false em caso contrário
 	 */
 	public boolean addicionarPercursoSimplesNoInicio(PercursoSimples percurso) {
-		// TODO
-		return false;
+		if (nPercursosSimples == percursosSimples.length)
+			return false;
+		if (!(percurso.getFim().equals(percursosSimples[0].getInicio())))
+			return false;
+		if (haveRepetitions(new String[] { percurso.getInicio() },
+				getLocalidades()))
+			return false;
+		for (int i = nPercursosSimples - 1; i >= 0; i--) {
+			percursosSimples[i + 1] = percursosSimples[i];
+		}
+		percursosSimples[0] = percurso;
+		nPercursosSimples++;
+		return true;
+
 	}
 
 	/**
@@ -362,8 +385,23 @@ public class PercursoComposto {
 	 * @return True se adicionou, ou false caso contrário
 	 */
 	public boolean addicionarPercursoCompostoNoInicio(PercursoComposto percurso) {
-		// TODO
-		return false;
+		if (nPercursosSimples > 0)
+			return false;
+		// verifica a sequencia
+		if (!(percurso.getLocalidades()[percurso.getNumLocalidades() - 1]
+				.equals(getLocalidades()[0])))
+			return false;
+		// verifica se ha repetiçoes
+		if (haveRepetitions(
+				Arrays.copyOfRange(percurso.getLocalidades(), 0,
+						(percurso.getLocalidades().length) - 1),
+				getLocalidades()))
+			return false;
+		System.arraycopy(percursosCompostos, 0, percursosCompostos, 1,
+				nPercursosCompostos);
+		percursosCompostos[0] = percurso;
+		nPercursosCompostos++;
+		return true;
 	}
 
 	/**
@@ -378,7 +416,6 @@ public class PercursoComposto {
 		 * percursosCompostos[0].percursosSimples[0].getInicio(); return null;
 		 */
 		return getLocalidades()[0];
-
 	}
 
 	/**
@@ -594,19 +631,16 @@ public class PercursoComposto {
 		pc4.print("> ");
 		System.out.println();
 
-		// TESTE
-		System.out.println(pc4.getNumLocalidades());
-		System.out.println(Arrays.toString(pc4.getLocalidades()));
-		System.out.println(pc4.getInicio());
-		System.out.println(pc4.getFim());
-
-		// TESTE
-
 		// =====================================================================
 		System.out.println(strSeparator);
 		System.out.println("Teste ao adicionar PercursoSimples No Início");
+		pc1.print("> ");
+		System.out.println();
 
-		pc1.addicionarPercursoSimplesNoInicio(ps4);
+		boolean result = pc1.addicionarPercursoSimplesNoInicio(ps4);
+		System.out.println("A adição de " + ps4 + " deu -> " + result);
+		System.out.println();
+
 		pc1.print("> ");
 		System.out.println();
 
@@ -616,7 +650,7 @@ public class PercursoComposto {
 		pc1.print("> ");
 		System.out.println();
 
-		boolean result = pc1.addicionarPercursoSimplesNoFinal(ps3);
+		result = pc1.addicionarPercursoSimplesNoFinal(ps3);
 		System.out.println("A adição de " + ps3 + " deu -> " + result);
 		System.out.println();
 
@@ -638,76 +672,89 @@ public class PercursoComposto {
 		System.out.println();
 
 		// =====================================================================
-		/*
-		 * System.out.println(strSeparator);
-		 * System.out.println("Teste ao adicionar PercursoComposto No Inicio");
-		 * pc2.print("> "); System.out.println();
-		 * 
-		 * result = pc2.addicionarPercursoCompostoNoInicio(new PercursoComposto(
-		 * "SAGRESFARO", ps4, 20)); System.out.println("A adição de " + ps4 +
-		 * " deu -> " + result); System.out.println();
-		 * 
-		 * pc2.print("> "); System.out.println();
-		 * 
-		 * //
-		 * =====================================================================
-		 * System.out.println(strSeparator); System.out
-		 * .println("Teste ao adicionar PercursoComposto No Inicio com erro");
-		 * pc1.print("> "); System.out.println();
-		 * 
-		 * result = pc1.addicionarPercursoCompostoNoInicio(pc2);
-		 * System.out.println("A adição de " + pc2 + " deu -> " + result);
-		 * System.out.println();
-		 * 
-		 * pc1.print("> "); System.out.println();
-		 * 
-		 * //
-		 * =====================================================================
-		 * System.out.println(strSeparator);
-		 * System.out.println("Teste ao adicionar PercursoComposto No Final");
-		 * PercursoComposto pc6 = new PercursoComposto("sul", new
-		 * PercursoComposto("ss", new PercursoSimples[] { ps4, ps1 }, 20), 20);
-		 * pc6.print("> "); System.out.println();
-		 * 
-		 * PercursoComposto pc7 = new PercursoComposto("centro", new
-		 * PercursoSimples[] { ps2, ps3 }, 20);
-		 * 
-		 * result = pc6.addicionarPercursoCompostoNoFinal(pc7);
-		 * System.out.println("A adição de " + pc7 + " deu -> " + result);
-		 * System.out.println();
-		 * 
-		 * pc6.print("> "); System.out.println();
-		 * 
-		 * //
-		 * =====================================================================
-		 * //TESTE System.out.println(strSeparator);
-		 * System.out.println("Teste ao copia profunda"); PercursoComposto
-		 * testCopiaProfunda = new PercursoComposto(pc6);
-		 * testCopiaProfunda.print("> "); // System.out.println(strSeparator);
-		 * System.out.println("Teste ao clone");
-		 * 
-		 * pc6.print("> "); System.out.println();
-		 * 
-		 * PercursoComposto pc8 = pc6.clone(); pc8.print("> ");
-		 * System.out.println();
-		 * 
-		 * PercursoComposto pcA = new PercursoComposto("wa", new
-		 * PercursoSimples[] { new PercursoSimples("vVC", "Viana do Castelo",
-		 * "Caminha", 70_000, 20) }, 20);
-		 * 
-		 * result = pc6.addicionarPercursoCompostoNoFinal(pcA);
-		 * 
-		 * System.out.println("Adicionado " + pcA + " ao pc original, deu -> " +
-		 * result); System.out.println();
-		 * 
-		 * pc8.print("> "); System.out.println();
-		 * 
-		 * //
-		 * =====================================================================
-		 * System.out.println(strSeparator);
-		 * System.out.println("Teste ao subidaAcumulada"); pc6.print("> ");
-		 * System.out.println(); System.out.println(pc6 +
-		 * " tem uma subida acumulada de -> " + pc6.getSubidaAcumulada());
-		 */
+		// TAMOS AQUI
+		System.out.println(strSeparator);
+		System.out.println("Teste ao adicionar PercursoComposto No Inicio");
+		pc2.print("> ");
+		System.out.println();
+
+		result = pc2.addicionarPercursoCompostoNoInicio(new PercursoComposto(
+				"SAGRESFARO", ps4, 20));
+		System.out.println("A adição de " + ps4 + " deu -> " + result);
+		System.out.println();
+
+		pc2.print("> ");
+		System.out.println();
+		// =====================================================================
+		System.out.println(strSeparator);
+		System.out
+				.println("Teste ao adicionar PercursoComposto No Inicio com erro");
+		pc1.print("> ");
+		System.out.println();
+
+		result = pc1.addicionarPercursoCompostoNoInicio(pc2);
+		System.out.println("A adição de " + pc2 + " deu -> " + result);
+		System.out.println();
+
+		pc1.print("> ");
+		System.out.println();
+
+		//
+		// =====================================================================
+
+		System.out.println(strSeparator);
+		System.out.println("Teste ao adicionar PercursoComposto No Final");
+		PercursoComposto pc6 = new PercursoComposto("sul",
+				new PercursoComposto("ss", new PercursoSimples[] { ps4, ps1 },
+						20), 20);
+		pc6.print("> ");
+		System.out.println();
+
+		PercursoComposto pc7 = new PercursoComposto("centro",
+				new PercursoSimples[] { ps2, ps3 }, 20);
+
+		result = pc6.addicionarPercursoCompostoNoFinal(pc7);
+		System.out.println("A adição de " + pc7 + " deu -> " + result);
+		System.out.println();
+
+		pc6.print("> ");
+		System.out.println();
+
+		// =====================================================================
+		System.out.println(strSeparator);
+		System.out.println("Teste ao copia profunda");
+		PercursoComposto testCopiaProfunda = new PercursoComposto(pc6);
+		testCopiaProfunda.print("> "); // System.out.println(strSeparator);
+		System.out.println("Teste ao clone");
+
+		pc6.print("> ");
+		System.out.println();
+
+		PercursoComposto pc8 = pc6.clone();
+		pc8.print("> ");
+		System.out.println();
+
+		PercursoComposto pcA = new PercursoComposto("wa",
+				new PercursoSimples[] { new PercursoSimples("vVC",
+						"Viana do Castelo", "Caminha", 70_000, 20) }, 20);
+
+		result = pc6.addicionarPercursoCompostoNoFinal(pcA);
+
+		System.out.println("Adicionado " + pcA + " ao pc original, deu -> "
+				+ result);
+		System.out.println();
+
+		pc8.print("> ");
+		System.out.println();
+
+		//
+		// =================================================================
+		System.out.println(strSeparator);
+		System.out.println("Teste ao subidaAcumulada");
+		pc6.print("> ");
+		System.out.println();
+		System.out.println(pc6 + " tem uma subida acumulada de -> "
+				+ pc6.getSubidaAcumulada());
+
 	}
 }
