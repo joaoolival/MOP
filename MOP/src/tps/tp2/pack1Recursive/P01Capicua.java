@@ -6,8 +6,6 @@ public class P01Capicua {
 	 * Main
 	 */
 	public static void main(String[] args) {
-		System.out.println(3592/10);
-		
 		int n = 1;
 		int res = getLastDigit(n);
 		System.out.println("getLastDigit of " + n + "  = " + res);

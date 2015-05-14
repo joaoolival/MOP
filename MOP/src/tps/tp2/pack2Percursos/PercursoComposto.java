@@ -456,9 +456,6 @@ public class PercursoComposto {
 		
 		//teste a findLocalidade
 		System.out.println(pcTEST.findLocalidade("Lisboa"));
-
-		System.out
-				.println("-----------------------------Meu teste---------------------------------");
 	}
 
 }

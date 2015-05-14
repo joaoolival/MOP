@@ -202,7 +202,7 @@ public class P03HanoiTowers {
 		// não alterar as duas linhas seguintes
 		if (!isActive)
 			cancelExecution();
-		
+
 		if (nDiscs == 1) {
 			Disc p = startRod.remDisc();
 			endRod.addDisc(p);
@@ -210,17 +210,16 @@ public class P03HanoiTowers {
 			Thread.sleep(movementsDelay);
 			return 1;
 		}
-		// metodo chamado para passar todo os discos menos o ultimo para a
+		// metodo chamado para passar todos os discos menos o ultimo para a
 		// segunda parcela usando a ultima como auxiliar
 		moveHanoiDiscs(nDiscs - 1, startRod, auxRod, endRod);
 		// zona do codigo onde se retira o disco que falta na primeira parcela
 		// para a ultima parcela
-		moveHanoiDiscs(1, startRod, endRod,auxRod);
-		moveHanoiDiscs(nDiscs-1, auxRod,endRod,startRod);
+		moveHanoiDiscs(1, startRod, endRod, auxRod);
 		// metodo chamado para passar todos os discos que estao na segunda
 		// parcela para a terceira usando a primeira como auxiliar
-		//moveHanoiDiscs(nDiscs - 1, auxRod, endRod, startRod);
-		return 1;
+		moveHanoiDiscs(nDiscs - 1, auxRod, endRod, startRod);
+		return (int) Math.pow(2, nDiscs) - 1;
 	}
 
 	/**
