@@ -102,18 +102,20 @@ public class PercursoSimples {
 	 * @return True se o nome for válido
 	 */
 	public static boolean validarNomeDeLocal(String nome) {
+		// se tiver menos que dois char
 		if (nome.length() < 2)
 			return false;
+		// se o primeiro char nao for uma letra
 		if (!(Character.isLetter(nome.charAt(0))))
 			return false;
-		boolean valido = true;
+		// se os restantes chars nao forem letras, digitos, espacos ou underscore
 		for (int i = 1; i < nome.length(); i++) {
 			if (!(Character.isLetter(nome.charAt(i))
 					|| Character.isDigit(nome.charAt(i)) || nome.charAt(i) == ' ' || nome.charAt(i) == '_')) {
-				valido = false;
+				return false;
 			}
 		}
-		return valido;
+		return true;
 	}
 
 	public String getNome() {
@@ -157,7 +159,7 @@ public class PercursoSimples {
 	 *         o percurso recebido
 	 */
 	public boolean equals(PercursoSimples percurso) {
-		if (this == percurso) {
+		if (this.nome.equals(percurso.nome) && this.inicio.equals(percurso.inicio) && this.fim.equals(percurso.fim)) {
 			return true;
 		} else {
 			return false;
@@ -196,13 +198,29 @@ public class PercursoSimples {
 
 		System.out.println("ps1 toString -> " + ps1);
 		
-		/*
+		System.out.println();
+		System.out.println("-------------------------------------OUTROS TESTES---------------------------------------");
+		System.out.println();
+		
+		//teste construtor de copia
 		PercursoSimples ps3 = new PercursoSimples(ps1);
 		ps3.print("ps3 -> ");
 		
+		//teste ao clone
 		PercursoSimples ps4 = ps1.clone();
 		ps4.print("ps4 -> ");
-		*/
+		
+		//teste validar nome
+		System.out.println("teste ao nome A2 -> " + validarNomeDeLocal("A2"));
+		System.out.println("teste ao nome A -> " + validarNomeDeLocal("A"));
+		System.out.println("teste ao nome A* -> " + validarNomeDeLocal("A*"));
+		
+		//teste ao equals
+		boolean ps1ps1 = ps1.equals(ps1);
+		System.out.println("ps1.equals(ps1) -> " + ps1ps1);
+		
+		
+		
 		
 		
 		

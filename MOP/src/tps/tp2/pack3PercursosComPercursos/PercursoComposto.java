@@ -133,33 +133,48 @@ public class PercursoComposto {
 	 */
 	public PercursoComposto(String nome, PercursoSimples[] percursosSimples,
 			PercursoComposto[] percursosCompostos, int maxPercursos) {
-		// se vier a null guardar o o array com o o tamanho max
+		// verifica nome
 		if (!(PercursoSimples.validarNomeDeLocal(nome)))
 			throw new IllegalArgumentException("Nome inválido -> " + nome);
 
+		// verifica se caso nao existam PC se existem PS
 		if (percursosCompostos.length == 0) {
 			if (percursosSimples.length == 0)
 				throw new IllegalArgumentException(
 						"Tem de ter pelo menos um percurso simples");
 		}
 
+		// verifica se algum PS e null e se ha sequencia entre eles
 		for (int i = 0; i < percursosSimples.length; i++) {
+			
 			if (percursosSimples[i] == null)
 				throw new IllegalArgumentException(
 						"Array de percursos simples inválido, contem nulls -> "
 								+ percursosSimples);
+			
+			if(percursosSimples[i].getInicio().equals(percursosSimples[i].getFim()))
+				throw new IllegalArgumentException(
+						"Array de percursos simples inválido, este percurso simples comeca e acaba no mesmo sitio -> "
+								+ percursosSimples[i]);
 			if (i < (percursosSimples.length - 1)
-					&& (!percursosSimples[i].getFim().equals(
-							percursosSimples[i + 1].getInicio())))
+					&& (!(percursosSimples[i].getFim()
+							.equals(percursosSimples[i + 1].getInicio()))))
 				throw new IllegalArgumentException(
 						"Array de percursos simples inválido, nao esta em sequencia -> "
 								+ percursosSimples);
 		}
-
+		// verifica se algum PC e null e se ha sequencia entre eles
 		for (int i = 0; i < percursosCompostos.length; i++) {
 			if (percursosCompostos[i] == null)
 				throw new IllegalArgumentException(
 						"Array de percursos compostos inválido, contem nulls -> "
+								+ percursosCompostos);
+
+			if (i < (percursosCompostos.length - 1)
+					&& (!(percursosCompostos[i].getFim()
+							.equals(percursosCompostos[i + 1].getInicio()))))
+				throw new IllegalArgumentException(
+						"Array de percursos simples inválido, nao esta em sequencia -> "
 								+ percursosCompostos);
 		}
 
@@ -172,21 +187,26 @@ public class PercursoComposto {
 					"Array de percursos simples nao coincide com  percursos compostos pois nao esta em sequencia -> "
 							+ percursosSimples + percursosCompostos);
 		}
-
+		// grava variaveis
 		this.nome = nome;
-		this.nPercursosSimples = percursosSimples.length;
-		this.nPercursosCompostos = percursosCompostos.length;
-
-		// cria array com o max tamanho
-		PercursoSimples[] percursosFullLength = new PercursoSimples[maxPercursos];
-		System.arraycopy(percursosSimples, 0, percursosFullLength, 0,
-				percursosSimples.length);
-		this.percursosSimples = percursosFullLength;
-
-		PercursoComposto[] percursosCompostosFullLength = new PercursoComposto[maxPercursos];
-		System.arraycopy(percursosCompostos, 0, percursosCompostosFullLength,
-				0, percursosCompostos.length);
-		this.percursosCompostos = percursosCompostosFullLength;
+		// caso o array de PS seja null ou vazio
+		if (percursosSimples == null || percursosSimples.length == 0) {
+			nPercursosSimples = 0;
+			this.percursosSimples = new PercursoSimples[maxPercursos];
+		} else {
+			this.nPercursosSimples = percursosSimples.length;
+			this.percursosSimples = Arrays.copyOf(percursosSimples,
+					maxPercursos);
+		}
+		// caso o array de PC seja null ou vazio
+		if (percursosCompostos == null || percursosCompostos.length == 0) {
+			nPercursosCompostos = 0;
+			this.percursosCompostos = new PercursoComposto[maxPercursos];
+		} else {
+			this.nPercursosCompostos = percursosCompostos.length;
+			this.percursosCompostos = Arrays.copyOf(percursosCompostos,
+					maxPercursos);
+		}
 
 	}
 
@@ -196,6 +216,7 @@ public class PercursoComposto {
 	 * @param pc
 	 *            Percurso a copiar
 	 */
+	// o copyOfRange retira as posicoes vazias dos arrays
 	public PercursoComposto(PercursoComposto pc) {
 		this(pc.nome, Arrays.copyOfRange(pc.percursosSimples, 0,
 				pc.nPercursosSimples), Arrays.copyOfRange(
@@ -209,6 +230,7 @@ public class PercursoComposto {
 	 * @return O percurso composto que é uma cópia profunda do percurso composto
 	 *         corrente
 	 */
+	// o copyOfRange retira as posicoes vazias dos arrays
 	public PercursoComposto clone() {
 		return new PercursoComposto(nome, Arrays.copyOfRange(percursosSimples,
 				0, nPercursosSimples), Arrays.copyOfRange(percursosCompostos,
@@ -229,6 +251,9 @@ public class PercursoComposto {
 		// se houver percursos compostos da false
 		if (nPercursosCompostos > 0)
 			return false;
+		// se nao houver espaço da false
+		if (nPercursosSimples == percursosSimples.length)
+			return false;
 		// se houverem repeticoes ou nao tiver em sequencia da false
 		if (haveRepetitions(getLocalidades(),
 				new String[] { percurso.getFim() })
@@ -237,7 +262,8 @@ public class PercursoComposto {
 			return false;
 		if (nPercursosSimples == percursosSimples.length)
 			return false;
-		// caso nao retorne false actualiza o array e o numero de percursos
+		// caso nao retorne false actualiza o array com o percurso a inserir e o
+		// numero de percursos
 		percursosSimples[nPercursosSimples] = percurso;
 		nPercursosSimples++;
 		return true;
@@ -254,14 +280,20 @@ public class PercursoComposto {
 	 * @return True se adicionou
 	 */
 	public boolean addicionarPercursoCompostoNoFinal(PercursoComposto percurso) {
+		// se nao houver espaço
+		if (nPercursosCompostos == percursosCompostos.length)
+			return false;
+		// se nao estiver em sequencia
 		if (!(getFim().equals(percurso.getInicio())))
 			return false;
+		// se houve repeticoes
 		if (haveRepetitions(
 				getLocalidades(),
 				Arrays.copyOfRange(percurso.getLocalidades(), 1,
 						(percurso.getLocalidades().length))))
 			return false;
-		percursosCompostos[nPercursosCompostos]=percurso;
+		// actualiza o array
+		percursosCompostos[nPercursosCompostos] = percurso;
 		nPercursosCompostos++;
 		return true;
 	}
@@ -281,6 +313,7 @@ public class PercursoComposto {
 	private static boolean haveRepetitions(String[] locs1, String[] locs2) {
 		for (int i = 0; i < locs1.length; i++) {
 			for (int j = 0; j < locs2.length; j++) {
+				// se um percurso do locs1 for igual a um percurso locs2
 				if (locs1[i].equals(locs2[j])) {
 					return true;
 				}
@@ -301,21 +334,29 @@ public class PercursoComposto {
 	private String[] getLocalidades() {
 		String[] aux = new String[getNumLocalidades()];
 		int intAux = 0;
-
+		// se houver percursos simples
 		if (nPercursosSimples > 0) {
+			// insere o inicio do primeiro PS
 			aux[0] = percursosSimples[0].getInicio();
 			intAux++;
+			// insere todos as localizacoes de fim de cada PS
 			for (int i = 0; i < nPercursosSimples; i++) {
 				aux[intAux] = percursosSimples[i].getFim();
 				intAux++;
 			}
 		}
-
+		// se houver percursos compostos
 		if (nPercursosCompostos > 0) {
+			// percorre todos os percursos compostos
 			for (int i = 0; i < nPercursosCompostos; i++) {
-				aux[intAux] = percursosCompostos[i].percursosSimples[0]
-						.getInicio();
-				intAux++;
+				// se nao houver PS retira a localizacao inicial de cada PC
+				if (nPercursosSimples == 0 && i == 0) {
+					aux[intAux] = percursosCompostos[i].percursosSimples[0]
+							.getInicio();
+					intAux++;
+				}
+				// retira a loc final de cada PS de cada PC do
+				// percursosCompostos
 				for (int j = 0; j < percursosCompostos[i].nPercursosSimples; j++) {
 					aux[intAux] = percursosCompostos[i].percursosSimples[j]
 							.getFim();
@@ -323,7 +364,6 @@ public class PercursoComposto {
 				}
 			}
 		}
-
 		return aux;
 	}
 
@@ -341,7 +381,8 @@ public class PercursoComposto {
 		int aux = nPercursosSimples > 0 ? nPercursosSimples + 1 : 0;
 		if (nPercursosCompostos > 0) {
 			for (int i = 0; i < nPercursosCompostos; i++) {
-				aux += percursosCompostos[i].getNumLocalidades();
+				// se nao for o primeiro percurso composto nao e preciso por a localidade de inicio
+				aux += i>0 ? percursosCompostos[i].getNumLocalidades() -1 : percursosCompostos[i].getNumLocalidades();
 			}
 		}
 		return aux;
@@ -357,20 +398,24 @@ public class PercursoComposto {
 	 * @return True se adicionou, ou false em caso contrário
 	 */
 	public boolean addicionarPercursoSimplesNoInicio(PercursoSimples percurso) {
+		// se nao houver espaco
 		if (nPercursosSimples == percursosSimples.length)
 			return false;
+		// se nao estiver em sequencia
 		if (!(percurso.getFim().equals(percursosSimples[0].getInicio())))
 			return false;
+		// se nao houver repeticoes
 		if (haveRepetitions(new String[] { percurso.getInicio() },
 				getLocalidades()))
 			return false;
-		for (int i = nPercursosSimples - 1; i >= 0; i--) {
-			percursosSimples[i + 1] = percursosSimples[i];
-		}
+
+		// faz shift a todas posicoes para a direira
+		System.arraycopy(percursosSimples, 0, percursosSimples, 1,
+				nPercursosSimples);
+		// acrescenta o percurso
 		percursosSimples[0] = percurso;
 		nPercursosSimples++;
 		return true;
-
 	}
 
 	/**
@@ -385,7 +430,11 @@ public class PercursoComposto {
 	 * @return True se adicionou, ou false caso contrário
 	 */
 	public boolean addicionarPercursoCompostoNoInicio(PercursoComposto percurso) {
+		// verefica de ha percursos simples
 		if (nPercursosSimples > 0)
+			return false;
+		// verifica se ha espaco
+		if (nPercursosCompostos == percursosCompostos.length)
 			return false;
 		// verifica a sequencia
 		if (!(percurso.getLocalidades()[percurso.getNumLocalidades() - 1]
@@ -397,8 +446,10 @@ public class PercursoComposto {
 						(percurso.getLocalidades().length) - 1),
 				getLocalidades()))
 			return false;
+		// faz shift ao array
 		System.arraycopy(percursosCompostos, 0, percursosCompostos, 1,
 				nPercursosCompostos);
+		// insere percurso
 		percursosCompostos[0] = percurso;
 		nPercursosCompostos++;
 		return true;
@@ -442,18 +493,16 @@ public class PercursoComposto {
 	 */
 	public int getDistancia() {
 		int aux = 0;
+		// se houver percursos simples
 		if (nPercursosSimples > 0) {
 			for (int i = 0; i < nPercursosSimples; i++) {
 				aux += percursosSimples[i].getDistancia();
 			}
 		}
-
+		// se houver percursos compostos
 		if (nPercursosCompostos > 0) {
 			for (int i = 0; i < nPercursosCompostos; i++) {
-				for (int j = 0; j < percursosCompostos[i].nPercursosSimples; j++) {
-					aux += percursosCompostos[i].percursosSimples[j]
-							.getDistancia();
-				}
+				aux += percursosCompostos[i].getDistancia();
 			}
 		}
 		return aux;
@@ -467,17 +516,16 @@ public class PercursoComposto {
 	 */
 	public int getDeclive() {
 		int aux = 0;
+		// se houver percursos simples
 		if (nPercursosSimples > 0) {
 			for (int i = 0; i < nPercursosSimples; i++) {
 				aux += percursosSimples[i].getDeclive();
 			}
 		}
+		// se houver percursos compostos
 		if (nPercursosCompostos > 0) {
 			for (int i = 0; i < nPercursosCompostos; i++) {
-				for (int j = 0; j < percursosCompostos[i].nPercursosSimples; j++) {
-					aux += percursosCompostos[i].percursosSimples[j]
-							.getDeclive();
-				}
+				aux += percursosCompostos[i].getDeclive();
 			}
 		}
 		return aux;
@@ -492,19 +540,18 @@ public class PercursoComposto {
 	 */
 	public int getSubidaAcumulada() {
 		int aux = 0;
+		// se houver percursos simples
 		if (nPercursosSimples > 0) {
 			for (int i = 0; i < nPercursosSimples; i++) {
-				if (percursosSimples[i].getDeclive() >= 0)
+				if (percursosSimples[i].getDeclive() > 0)
 					aux += percursosSimples[i].getDeclive();
 			}
 		}
+		
+		// se houver percursos compostos
 		if (nPercursosCompostos > 0) {
 			for (int i = 0; i < nPercursosCompostos; i++) {
-				for (int j = 0; j < percursosCompostos[i].nPercursosSimples; j++) {
-					if (percursosCompostos[i].percursosSimples[j].getDeclive() >= 0)
-						aux += percursosCompostos[i].percursosSimples[j]
-								.getDeclive();
-				}
+				aux += percursosCompostos[i].getSubidaAcumulada();
 			}
 		}
 		return aux;
@@ -755,6 +802,14 @@ public class PercursoComposto {
 		System.out.println();
 		System.out.println(pc6 + " tem uma subida acumulada de -> "
 				+ pc6.getSubidaAcumulada());
+		
+		System.out.println();
+		System.out.println("-------------------------------------OUTROS TESTES---------------------------------------");
+		System.out.println();
+		
+		System.out.println("numero de localidades pc6 -> " + pc6.getNumLocalidades());
+		System.out.println(Arrays.toString(pc6.getLocalidades()));
+		
 
 	}
 }

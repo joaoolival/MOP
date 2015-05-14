@@ -2,9 +2,6 @@ package tps.tp2.pack2Percursos;
 
 import java.util.Arrays;
 
-//para que serve o maxPercuros?
-//o que gravar no nPercursos?
-
 /**
  * Classe que suporta um percurso composto por vários percursos simples
  */
@@ -61,32 +58,34 @@ public class PercursoComposto {
 	 * @param maxPercursos
 	 *            Nº máximo de percursos suportado
 	 */
+	
+	
 	public PercursoComposto(String nome, PercursoSimples[] percursos,
 			int maxPercursos) {
+		// caso o nome nao seja valido
 		if (!(PercursoSimples.validarNomeDeLocal(nome)))
 			throw new IllegalArgumentException("Nome inválido -> " + nome);
-
+		
 		for (int i = 0; i < percursos.length; i++) {
+			// caso alguma posicao do array de percursos seja null
 			if (percursos[i] == null)
 				throw new IllegalArgumentException(
 						"Array de percursos inválido pois contem nulls -> "
 								+ percursos);
-
+			// caso os varios percursos nao estejam em sequencia
 			if (i < (percursos.length - 1)
-					&& (percursos[i].getFim() != percursos[i + 1].getInicio()))
+					&& (!(percursos[i].getFim().equals(percursos[i + 1].getInicio()))))
 				throw new IllegalArgumentException(
 						"Array de percursos inválido nao esta em sequencia -> "
 								+ percursos);
 		}
-
+		
 		this.nome = nome;
 		this.nPercursos = percursos.length;
 
-		// cria array com o max tamanho
-		PercursoSimples[] percursosFullLength = new PercursoSimples[maxPercursos];
-		System.arraycopy(percursos, 0, percursosFullLength, 0, percursos.length);
-		this.percursos = percursosFullLength;
-
+		// grava os percursos mas um array com o tamanho do maximo de percursos
+		this.percursos = Arrays.copyOf(percursos,
+				maxPercursos);
 	}
 
 	/**
@@ -116,7 +115,8 @@ public class PercursoComposto {
 	 * @return True se adicionou
 	 */
 	public boolean addicionarPercursoNoFinal(PercursoSimples percurso) {
-		if ((percursos[nPercursos - 1].getFim() == percurso.getInicio())
+		//adiciona caso esteja em sequencia
+		if ((percursos[nPercursos - 1].getFim().equals(percurso.getInicio()))
 				&& percursos.length != nPercursos) {
 			percursos[nPercursos] = percurso;
 			nPercursos += 1;
@@ -134,11 +134,13 @@ public class PercursoComposto {
 	 * @return True se adicionou
 	 */
 	public boolean addicionarPercursoNoInicio(PercursoSimples percurso) {
-		if (percurso.getFim() == percursos[0].getInicio()
+		//adiciona caso esteja em sequencia
+		if (percurso.getFim().equals(percursos[0].getInicio())
 				&& percursos.length != nPercursos) {
-			nPercursos += 1;
+			//faz shift ao array para inserir o novo percurso
 			System.arraycopy(percursos, 0, percursos, 1, percursos.length - 1);
 			percursos[0] = percurso;
+			nPercursos += 1;
 			return true;
 		}
 		return false;
@@ -156,20 +158,24 @@ public class PercursoComposto {
 	 */
 	public PercursoSimples[] removerPercursosNoFimDesde(String localidade) {
 		int aux = 0;
-		if (percursos[0].getInicio() == localidade) {
+		// caso a localidade a remover seja a primeira
+		if (percursos[0].getInicio().equals(localidade)) {
 			PercursoSimples[] removePart = Arrays.copyOfRange(percursos, 0,
 					nPercursos);
+			//limpa o array
 			for (int i = 0; i < nPercursos; i++) {
 				percursos[i] = null;
 			}
 			nPercursos = 0;
 			return removePart;
 		}
+		// percorre todas as localidades de fim e compara com a localidade
 		for (int i = 0; i < nPercursos; i++) {
-			if (percursos[i].getFim() == localidade) {
+			if (percursos[i].getFim().equals(localidade)) {
 				aux = i;
 				break;
 			}
+			// caso nao encontre
 			if (i == nPercursos - 1)
 				return null;
 		}
@@ -179,6 +185,7 @@ public class PercursoComposto {
 				nPercursos);
 
 		int length = nPercursos;
+		// for para eliminar percursos nao pretendidos do array de percursos
 		for (; aux < length; aux++) {
 			percursos[aux] = null;
 			nPercursos--;
@@ -198,28 +205,34 @@ public class PercursoComposto {
 	 */
 	public PercursoSimples[] removerPercursosNoInicioAte(String localidade) {
 		int aux = 0;
-		if (percursos[nPercursos - 1].getFim() == localidade) {
+		// caso seja a ultima localidade 
+		if (percursos[nPercursos - 1].getFim().equals(localidade)) {
 			PercursoSimples[] removePart = Arrays.copyOfRange(percursos, 0,
 					nPercursos);
+			//esvazia o array
 			for (int i = 0; i < nPercursos; i++) {
 				percursos[i] = null;
 			}
 			nPercursos = 0;
 			return removePart;
 		}
+		//caso a localidade seja a algum inicio de um PS
 		for (int i = 0; i < nPercursos; i++) {
-			if (percursos[i].getInicio() == localidade) {
+			if (percursos[i].getInicio().equals(localidade)) {
 				aux = i;
 				break;
 			}
 		}
+		// se nao encontrar nao remove nada
 		if (aux == 0)
 			return null;
-		// incremento no aux para criar array das remoçoes
-		// aux += 1;
+		
+		// a parte a remover ate a localidade
 		PercursoSimples[] removePart = Arrays.copyOfRange(percursos, 0, aux);
+		//shiftar o array com as localidades que vamos ficar
 		System.arraycopy(percursos, aux, percursos, 0, nPercursos - aux);
 		int length = nPercursos;
+		//colocar a null os elementos do array que foram eliminados
 		for (int i = length - aux; i < length; i++) {
 			percursos[i] = null;
 			nPercursos--;
@@ -238,7 +251,7 @@ public class PercursoComposto {
 	 */
 	private int findLocalidade(String localidade) {
 		for (int i = 0; i < nPercursos; i++) {
-			if (localidade == percursos[i].getInicio())
+			if (localidade.equals(percursos[i].getInicio()))
 				return i;
 		}
 		return -1;
@@ -400,23 +413,32 @@ public class PercursoComposto {
 		System.out.println();
 
 		// removerPercursosNoInicio
-
 		PercursoSimples[] psx2 = pc2.removerPercursosNoInicioAte("Lisboa");
 		pc2.print("> ");
 		System.out.println("Percursos removidos -> " + Arrays.toString(psx2));
-
-		System.out
-				.println("-----------------------------Meu teste---------------------------------");
+		
+		
+		
+		System.out.println();
+		System.out.println("-------------------------------------OUTROS TESTES---------------------------------------");
+		System.out.println();
+		
+		//PS para testes
 		PercursoSimples psTEST = new PercursoSimples("A4", "Porto", "Braga",
 				317_000, 0);
+		
+		//PC para testes
 		PercursoComposto pcTEST = new PercursoComposto("PERCURSO_TEST",
 				percursos, 4);
+		
+		//teste a adicionar percurso no final
 		boolean resultTEST = pcTEST.addicionarPercursoNoFinal(psTEST);
 		pcTEST.print("> ");
 		System.out.println();
 		System.out.println("A adição de " + psTEST + " deu -> " + resultTEST);
 		System.out.println();
-
+		
+		//teste a remocao no fim desde porto
 		System.out.println("remocao no fim desde Porto");
 		System.out.println(Arrays.toString(pcTEST
 				.removerPercursosNoFimDesde("Porto")));
@@ -424,13 +446,15 @@ public class PercursoComposto {
 		pcTEST.print("> ");
 		System.out.println();
 
+		//teste a remocao no inicio desde lisboa
 		System.out.println("remocao no inicio ate Lisboa");
 		System.out.println(Arrays.toString(pcTEST
 				.removerPercursosNoInicioAte("Lisboa")));
 
 		pcTEST.print("> ");
 		System.out.println();
-
+		
+		//teste a findLocalidade
 		System.out.println(pcTEST.findLocalidade("Lisboa"));
 
 		System.out
