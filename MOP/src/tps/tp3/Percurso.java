@@ -47,7 +47,14 @@ public abstract class Percurso {
 	/**
 	 * Devolve a descricao do percurso
 	 */
+	public abstract String[] getLocalidades();
+	
+	/**
+	 * Devolve a descricao do percurso
+	 */
 	public abstract String getDescricao();
+	
+	
 
 	/**
 	 * Deve validar se contém só letras, digitos e espaços, deve começar por uma

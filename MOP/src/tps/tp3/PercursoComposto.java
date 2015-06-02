@@ -3,6 +3,8 @@ package tps.tp3;
 import java.util.Arrays;
 import java.util.Scanner;
 
+import classcode.p07Inheritance.cenario4Produto.C3ProdutoComposto;
+
 /**
  * Classe que suporta um percurso composto por vários percursos simples ou
  * compostos. A classe tem de ter pelo menos um percurso simples. Não admite
@@ -36,7 +38,7 @@ public class PercursoComposto extends Percurso {
 	 *            Nº máximo de percursos a suportar
 	 */
 	public PercursoComposto(String nome, Percurso percurso, int maxPercursos) {
-		// TODO
+		this(nome, new Percurso[] { percurso }, maxPercursos);
 	}
 
 	/**
@@ -55,7 +57,15 @@ public class PercursoComposto extends Percurso {
 	 *            Nº máximo de percursos a suportar
 	 */
 	public PercursoComposto(String nome, Percurso[] percursos, int maxPercursos) {
-		// TODO
+		// valida a nome atraves da classe pai
+		super(nome);
+
+		// caso nao existam percursos
+		if (percursos == null || percursos.length == 0) {
+			throw new IllegalArgumentException(
+					"O array percursos tem de ter pelo menos um percurso ->"
+							+ percursos);
+		}
 
 		// quando a false não valida a sequencilidade dos locais
 		final boolean CHECKLOCALIDADES = false;
@@ -70,6 +80,9 @@ public class PercursoComposto extends Percurso {
 			// TODO
 		}
 
+		this.nPercursos = percursos.length;
+		this.percursos = Arrays.copyOf(percursos, maxPercursos);
+
 	}
 
 	/**
@@ -79,7 +92,8 @@ public class PercursoComposto extends Percurso {
 	 *            Percurso a copiar
 	 */
 	public PercursoComposto(PercursoComposto pc) {
-		// TODO
+		this(pc.getNome(), Arrays.copyOfRange(pc.percursos, 0, pc.nPercursos),
+				pc.percursos.length);
 	}
 
 	/**
@@ -89,8 +103,8 @@ public class PercursoComposto extends Percurso {
 	 *         corrente
 	 */
 	public Object clone() {
-		// TODO
-		return null;
+		return new PercursoComposto(getNome(), Arrays.copyOfRange(percursos, 0,
+				nPercursos), percursos.length);
 	}
 
 	/**
@@ -147,9 +161,30 @@ public class PercursoComposto extends Percurso {
 	 *         composto
 	 */
 	private int getNumLocalidades() {
-		// TODO
-		return 0;
+		//FALTA CONTAR O PRIMEIRO INICIO
+		int aux = 0;
+		for (int i = 0; i < nPercursos; i++) {
+			if (percursos[i] instanceof PercursoSimples)
+				aux += 1;
+			// se for percurso composto
+			else {
+				// fazer o cast para percurso composto
+				PercursoComposto pc = (PercursoComposto) percursos[i];
+				// chamar recursivamente de novo o metodo
+				aux += pc.getNumLocalidades();
+			}
+		}
+		return aux;
 	}
+
+	/*
+	 * aux = nPercursosSimples > 0 ? nPercursosSimples + 1 : 0; if
+	 * (nPercursosCompostos > 0) { for (int i = 0; i < nPercursosCompostos; i++)
+	 * { // se nao for o primeiro percurso composto nao e preciso por a
+	 * localidade de inicio aux += i>0 ?
+	 * percursosCompostos[i].getNumLocalidades() -1 :
+	 * percursosCompostos[i].getNumLocalidades(); } } return aux; }
+	 */
 
 	/**
 	 * Deve adicionar o percurso recebido no início deste percurso composto. Não
@@ -172,8 +207,9 @@ public class PercursoComposto extends Percurso {
 	 * @return O local de início do percurso
 	 */
 	public String getInicio() {
-		// TODO
-		return null;
+		// como o metodo ta definido na classe pai podemos fazer getInicio sem
+		// fazer o cast
+		return percursos[0].getInicio();
 	}
 
 	/**
@@ -182,8 +218,7 @@ public class PercursoComposto extends Percurso {
 	 * @return O local de fim do percurso
 	 */
 	public String getFim() {
-		// TODO
-		return null;
+		return percursos[nPercursos - 1].getFim();
 	}
 
 	/**
@@ -193,8 +228,11 @@ public class PercursoComposto extends Percurso {
 	 * @return A distância do percurso
 	 */
 	public int getDistancia() {
-		// TODO
-		return 0;
+		int distancia = 0;
+		for (int i = 0; i < nPercursos; i++) {
+			distancia += percursos[i].getDistancia();
+		}
+		return distancia;
 	}
 
 	/**
@@ -204,8 +242,11 @@ public class PercursoComposto extends Percurso {
 	 * @return O declive do percurso
 	 */
 	public int getDeclive() {
-		// TODO
-		return 0;
+		int declive = 0;
+		for (int i = 0; i < nPercursos; i++) {
+			declive += percursos[i].getDeclive();
+		}
+		return declive;
 	}
 
 	/**
@@ -216,8 +257,12 @@ public class PercursoComposto extends Percurso {
 	 *         positivos
 	 */
 	public int getSubidaAcumulada() {
-		// TODO
-		return 0;
+		int subidaAcumulada = 0;
+		for (int i = 0; i < nPercursos; i++) {
+			subidaAcumulada += percursos[i].getDeclive() > 0 ? percursos[i]
+					.getDeclive() : 0;
+		}
+		return subidaAcumulada;
 	}
 
 	/**
@@ -231,15 +276,21 @@ public class PercursoComposto extends Percurso {
 	 *            parte de mostrar os percursos.
 	 */
 	public void print(String prefix) {
-		// TODO
+
+		// header do percurso
+		System.out.println(prefix + super.toString());
+
+		// percorrer todos os seus percursos
+		for (int i = 0; i < nPercursos; i++) {
+			percursos[i].print("  " + prefix);
+		}
 	}
 
 	/**
 	 * Deve devolver "composto"
 	 */
 	public String getDescricao() {
-		// TODO
-		return null;
+		return "composto";
 	}
 
 	/**

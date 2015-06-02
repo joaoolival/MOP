@@ -1,7 +1,5 @@
 package tps.tp3;
 
-import classcode.p08AbstractClassesAndInterfaces.C05ProdutoComposto;
-import tps.tp2.pack3PercursosComPercursos.PercursoSimples;
 
 /**
  * Classe que suporta um percurso simples
@@ -78,7 +76,7 @@ public class PercursoSimples extends Percurso {
 	 * Deve criar uma cópia do percurso recebido
 	 */
 	public PercursoSimples clone() {
-		return new PercursoSimples(super.getNome(), this.getInicio(),
+		return new PercursoSimples(this.getNome(), this.getInicio(),
 				this.getFim(), this.getDistancia(), this.getDeclive());
 	}
 
