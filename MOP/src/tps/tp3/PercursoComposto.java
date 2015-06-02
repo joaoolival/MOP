@@ -148,8 +148,28 @@ public class PercursoComposto extends Percurso {
 	 *         composto
 	 */
 	public String[] getLocalidades() {
-		// TODO
-		return null;
+		String[] localidades = new String[this.getNumLocalidades()];
+		int aux = 0;
+		//o primeiro de todos e logo guardados no array final, todos os seguintes irao ser removidos no final 
+		localidades[aux]= percursos[0].getInicio();
+		aux++;
+		for (int i = 0; i < nPercursos; i++) {
+			if (percursos[i] instanceof PercursoSimples){
+					localidades[aux] = percursos[i].getFim();
+					aux++;
+				}
+			// se for percurso composto
+			else {
+				// fazer o cast para percurso composto
+				// chamar recursivamente de novo o metodo
+				PercursoComposto pc = (PercursoComposto) percursos[i];
+				System.arraycopy(pc.getLocalidades(),
+						1, localidades, aux,
+						pc.getLocalidades().length-1);
+				aux+=pc.getLocalidades().length-1;
+			}
+		}
+		return localidades;
 	}
 
 	/**
@@ -161,7 +181,6 @@ public class PercursoComposto extends Percurso {
 	 *         composto
 	 */
 	private int getNumLocalidades() {
-		//FALTA CONTAR O PRIMEIRO INICIO
 		int aux = 0;
 		for (int i = 0; i < nPercursos; i++) {
 			if (percursos[i] instanceof PercursoSimples)
@@ -171,20 +190,11 @@ public class PercursoComposto extends Percurso {
 				// fazer o cast para percurso composto
 				PercursoComposto pc = (PercursoComposto) percursos[i];
 				// chamar recursivamente de novo o metodo
-				aux += pc.getNumLocalidades();
+				aux += pc.getNumLocalidades() - 1;
 			}
 		}
-		return aux;
+		return aux + 1;
 	}
-
-	/*
-	 * aux = nPercursosSimples > 0 ? nPercursosSimples + 1 : 0; if
-	 * (nPercursosCompostos > 0) { for (int i = 0; i < nPercursosCompostos; i++)
-	 * { // se nao for o primeiro percurso composto nao e preciso por a
-	 * localidade de inicio aux += i>0 ?
-	 * percursosCompostos[i].getNumLocalidades() -1 :
-	 * percursosCompostos[i].getNumLocalidades(); } } return aux; }
-	 */
 
 	/**
 	 * Deve adicionar o percurso recebido no início deste percurso composto. Não
