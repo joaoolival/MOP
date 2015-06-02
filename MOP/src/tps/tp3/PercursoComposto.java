@@ -117,8 +117,25 @@ public class PercursoComposto extends Percurso {
 	 * @return True se adicionou
 	 */
 	public boolean addicionarPercursoNoFinal(Percurso percurso) {
-		// TODO
-		return false;
+		// se nao houver espaco
+		if (percursos.length == nPercursos)
+			return false;
+		// se nao houver sequencia
+		if (!(getLocalidades()[getLocalidades().length-1]
+				.equals(percurso.getInicio())))
+			return false;
+		// se houver repeticoes
+		if (haveRepetitions(
+				getLocalidades(),
+				Arrays.copyOfRange(percurso.getLocalidades(), 1,
+						(percurso.getLocalidades().length)))) {
+			return false;
+		}
+		
+		percursos[nPercursos] = percurso;
+		nPercursos++;
+
+		return true;
 	}
 
 	/**
@@ -134,7 +151,14 @@ public class PercursoComposto extends Percurso {
 	 *         contrário
 	 */
 	private static boolean haveRepetitions(String[] locs1, String[] locs2) {
-		// TODO
+		for (int i = 0; i < locs1.length; i++) {
+			for (int j = 0; j < locs2.length; j++) {
+				// se um percurso do locs1 for igual a um percurso locs2
+				if (locs1[i].equals(locs2[j])) {
+					return true;
+				}
+			}
+		}
 		return false;
 	}
 
@@ -150,23 +174,23 @@ public class PercursoComposto extends Percurso {
 	public String[] getLocalidades() {
 		String[] localidades = new String[this.getNumLocalidades()];
 		int aux = 0;
-		//o primeiro de todos e logo guardados no array final, todos os seguintes irao ser removidos no final 
-		localidades[aux]= percursos[0].getInicio();
+		// o primeiro inicio de todos e logo guardado no array final, todos os
+		// seguintes irao ser removidos no final, e so finais serão adicionado
+		localidades[aux] = percursos[0].getInicio();
 		aux++;
 		for (int i = 0; i < nPercursos; i++) {
-			if (percursos[i] instanceof PercursoSimples){
-					localidades[aux] = percursos[i].getFim();
-					aux++;
-				}
+			if (percursos[i] instanceof PercursoSimples) {
+				localidades[aux] = percursos[i].getFim();
+				aux++;
+			}
 			// se for percurso composto
 			else {
 				// fazer o cast para percurso composto
 				// chamar recursivamente de novo o metodo
 				PercursoComposto pc = (PercursoComposto) percursos[i];
-				System.arraycopy(pc.getLocalidades(),
-						1, localidades, aux,
-						pc.getLocalidades().length-1);
-				aux+=pc.getLocalidades().length-1;
+				System.arraycopy(pc.getLocalidades(), 1, localidades, aux,
+						pc.getLocalidades().length - 1);
+				aux += pc.getLocalidades().length - 1;
 			}
 		}
 		return localidades;
@@ -207,8 +231,25 @@ public class PercursoComposto extends Percurso {
 	 * @return True se adicionou, ou false caso contrário
 	 */
 	public boolean addicionarPercursoNoInicio(Percurso percurso) {
-		// TODO
-		return false;
+		if (percursos.length == nPercursos)
+			return false;
+		// se nao houver sequencia
+		if (!(percurso.getFim()
+				.equals(getLocalidades()[0])))
+			return false;
+		// se houver repeticoes
+		if (haveRepetitions(Arrays.copyOfRange(percurso.getLocalidades(), 0,
+				(percurso.getLocalidades().length-1)),
+				getLocalidades()
+				)) {
+			return false;
+		}
+		// faz shift ao array
+		System.arraycopy(percursos, 0, percursos, 1,
+				nPercursos);
+		percursos[0] = percurso;
+		nPercursos++;
+		return true;
 	}
 
 	/**
@@ -286,10 +327,8 @@ public class PercursoComposto extends Percurso {
 	 *            parte de mostrar os percursos.
 	 */
 	public void print(String prefix) {
-
 		// header do percurso
 		System.out.println(prefix + super.toString());
-
 		// percorrer todos os seus percursos
 		for (int i = 0; i < nPercursos; i++) {
 			percursos[i].print("  " + prefix);
