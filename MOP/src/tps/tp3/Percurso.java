@@ -1,6 +1,6 @@
 package tps.tp3;
 
-public abstract class Percurso {
+public abstract class Percurso implements IPercurso {
 
 	/**
 	 * nome do percurso, deve conter só letras, digitos e espaços, deve começar
@@ -15,44 +15,51 @@ public abstract class Percurso {
 		this.nome = nome;
 	}
 
-	/**
-	 * Devolve o nome do percurso
+	/* (non-Javadoc)
+	 * @see tps.tp3.IPercurso#getNome()
 	 */
+	@Override
 	public String getNome() {
 		return nome;
 	}
 
-	/**
-	 * Devolve o local de início do percurso
+	/* (non-Javadoc)
+	 * @see tps.tp3.IPercurso#getInicio()
 	 */
-	public abstract String getInicio();
+	//@Override
+	//public abstract String getInicio();
 
 	/**
 	 * ... Métodos abstactos - colocar aqui
 	 */
-	/**
-	 * Devolve o local de fim do percurso
+	/* (non-Javadoc)
+	 * @see tps.tp3.IPercurso#getFim()
 	 */
-	public abstract String getFim();
-	/**
-	 * Devolve a distancia do percurso
+	//@Override
+	//public abstract String getFim();
+	/* (non-Javadoc)
+	 * @see tps.tp3.IPercurso#getDistancia()
 	 */
-	public abstract int getDistancia();
+	//@Override
+	//public abstract int getDistancia();
 	
-	/**
-	 * Devolve o declive do percurso
+	/* (non-Javadoc)
+	 * @see tps.tp3.IPercurso#getDeclive()
 	 */
-	public abstract int getDeclive();
+	//@Override
+	//public abstract int getDeclive();
 	
-	/**
-	 * Devolve a descricao do percurso
+	/* (non-Javadoc)
+	 * @see tps.tp3.IPercurso#getLocalidades()
 	 */
-	public abstract String[] getLocalidades();
+	//@Override
+	//public abstract String[] getLocalidades();
 	
-	/**
-	 * Devolve a descricao do percurso
+	/* (non-Javadoc)
+	 * @see tps.tp3.IPercurso#getDescricao()
 	 */
-	public abstract String getDescricao();
+	//@Override
+	//public abstract String getDescricao();
 	
 	
 
@@ -82,10 +89,10 @@ public abstract class Percurso {
 				return true;
 	}
 
-	/**
-	 * ToString, deve devolver uma String tal como:
-	 * "A2 de Lisboa para Faro, com 278000 metros e com 0 de declive"
+	/* (non-Javadoc)
+	 * @see tps.tp3.IPercurso#toString()
 	 */
+	@Override
 	public String toString() {
 		return "percurso " + getDescricao() + " " + getNome() + " de "
 				+ getInicio() + " para " + getFim() + ", com " + getDistancia()
@@ -93,13 +100,10 @@ public abstract class Percurso {
 	}
 
 
-	/**
-	 * Print, deve imprimir na consola o prefixo seguido da informação que se
-	 * obtém com o toString
-	 * 
-	 * @param prefix
-	 *            Prefixo a colocar antes da informação do toString
+	/* (non-Javadoc)
+	 * @see tps.tp3.IPercurso#print(java.lang.String)
 	 */
+	@Override
 	public void print(String prefix) {
 		System.out.println(prefix + this);
 	}

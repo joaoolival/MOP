@@ -3,8 +3,6 @@ package tps.tp3;
 import java.util.Arrays;
 import java.util.Scanner;
 
-import classcode.p07Inheritance.cenario4Produto.C3ProdutoComposto;
-
 /**
  * Classe que suporta um percurso composto por vários percursos simples ou
  * compostos. A classe tem de ter pelo menos um percurso simples. Não admite
@@ -404,14 +402,14 @@ public class PercursoComposto extends Percurso {
 		}
 		// condicao para eliminar os restantes percursos antes da localidade
 		// encontrada, dentro de qualquer percurso compostos
-		if (aux > 0) {
-			// shift ao array para os percursos voltarem a ocupar a menos
+		if (aux < nPercursos-1) {
+			// shift ao array para os percursos voltarem a ocupar a menor
 			// posicoes
 			System.arraycopy(percursos, aux, percursos, 0, nPercursos - aux);
 			for (int i = nPercursos - aux; i < nPercursos; i++) {
 				percursos[i] = null;
+				nPercursos--;
 			}
-			nPercursos -= aux;
 			return true;
 		} else {
 			return false;
