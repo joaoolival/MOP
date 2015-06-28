@@ -84,9 +84,9 @@ public class C3FrameWithGridLayout {
 		// Trocar um componente por outro
 		// System.out.println("Componente count -> "
 		// + frame.getContentPane().getComponentCount());
-		 frame.getContentPane().remove(4);
+		 frame.getContentPane().remove(10);
 		 JButton jb = new JButton("Novo componente");
-		 frame.getContentPane().add(jb, 4);
+		 frame.getContentPane().add(jb, 10);
 
 		// gl.setRows(2);
 		// gl.setColumns(4);

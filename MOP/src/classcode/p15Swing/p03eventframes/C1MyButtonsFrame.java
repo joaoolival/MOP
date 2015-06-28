@@ -45,7 +45,7 @@ public class C1MyButtonsFrame {
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
-		GridLayout gl = new GridLayout(2, 1);
+		GridLayout gl = new GridLayout(3, 1);
 		frame.getContentPane().setLayout(gl);
 
 		JButton button1 = new JButton("Ckick here!!!");
@@ -59,10 +59,17 @@ public class C1MyButtonsFrame {
 		ActionListener al2 = new ButtonActionListener();
 		button2.addActionListener(al1);
 		button2.addActionListener(al2);
-		button2.addActionListener(al2);
+		
+		JButton button3 = new JButton("Ckick here (count twice??)!!!");
+		ActionListener al3 = new ButtonActionListener();
+		button3.addActionListener(al1);
+		button3.addActionListener(al2);
+		button3.addActionListener(al3);
+		
 
 		// register the listener again
 		frame.getContentPane().add(button2);
+		frame.getContentPane().add(button3);
 
 		// puts the frame visible (is not visible at start)
 		frame.setVisible(true);

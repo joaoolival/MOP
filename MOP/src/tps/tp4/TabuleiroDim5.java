@@ -4,11 +4,11 @@ import java.awt.GridLayout;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
-public class TabuleiroDim5 extends Tabuleiro{
+public class TabuleiroDim5<E> extends Tabuleiro{
 
 	
-	TabuleiroDim5(){
-		super(5,5);
+	TabuleiroDim5(E[][]grids){
+		super(grids,5,5);
 	}
 	
 	//public void setGrid(){

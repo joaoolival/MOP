@@ -25,7 +25,7 @@ public class C01Box1 {
 		// integerBox.set("ola");
 
 		// obter o integer guardado
-		Integer theValue = (Integer) integerBox.get();
+		int theValue = (Integer) integerBox.get();
 
 		// mostrar o seu valor
 		System.out.println(theValue);

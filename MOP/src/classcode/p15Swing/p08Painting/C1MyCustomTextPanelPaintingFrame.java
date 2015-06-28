@@ -149,7 +149,7 @@ class MyPanel extends JPanel {
 
 	public MyPanel(String str) {
 		this.str = str;
-		setBorder(BorderFactory.createLineBorder(Color.black));
+		setBorder(BorderFactory.createLineBorder(Color.red));
 	}
 
 	public Dimension getPreferredSize() {

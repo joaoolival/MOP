@@ -1,6 +1,9 @@
 package tps.tp4;
 
+
+import java.util.Arrays;
 import java.awt.Color;
+
 import java.awt.GridLayout;
 import java.util.Random;
 
@@ -41,9 +44,22 @@ public class main {
 		frame.setVisible(true);
 		// life goes on
 		System.out.println("Frame created...");
-		TabuleiroDim5 test = new TabuleiroDim5();
-		frame.add(test.panel);
+		Quadricula[][] quad = new Quadricula[5][5];
+		for (int i = 0; i < quad.length; i++) {
+			for (int j = 0; j < quad.length; j++) {
+				quad[i][j] = new Quadricula(i,j);
+			}
+			
+		}
+		TabuleiroDim5 test = new TabuleiroDim5(quad);
+		for (int i = 0; i < quad.length; i++) {
+			for (int j = 0; j < quad.length; j++) {
+				test.add(quad[i][j]);
+			}
+		}
+	
 		
+		frame.add(test);
 	}
 	
 
