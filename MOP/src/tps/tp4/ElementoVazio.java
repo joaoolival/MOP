@@ -4,15 +4,21 @@ import java.awt.Graphics;
 
 public class ElementoVazio extends Elemento {
 	private static final long serialVersionUID = 5911365035416195247L;
+	private String nome;
 
 	public ElementoVazio(){
-		super(null);
+		super(Color.BLUE);
+		this.nome = "Vazio";
 	}
 	
-	@Override
+	public String getNome(){
+		return nome;
+	}
+	
+	/*@Override
     public void paintComponent(Graphics g) {
         g.setColor(Color.BLUE);
-        g.fillOval(100, 100, 100, 100);
-    }
+        g.fillOval(20, 20, 20, 20);
+    }*/
 }
 

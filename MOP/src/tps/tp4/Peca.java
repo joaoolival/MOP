@@ -4,14 +4,20 @@ import java.awt.Graphics;
 
 public class Peca extends Elemento {
 	private static final long serialVersionUID = -8277228317521251913L;
+    private String nome;
 	
 	public Peca(Color cor){
 		super(cor);
+		this.nome = "Peca";
 	}
 	
-	@Override
+	public String getNome(){
+		return nome;
+	}
+	
+	/*@Override
     public void paintComponent(Graphics g) {
         g.setColor(cor);
-        g.fillOval(100, 100, 100, 100);
-    }
+        g.fillOval(40, 40, 100, 100);
+    }*/
 }

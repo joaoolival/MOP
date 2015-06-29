@@ -1,14 +1,15 @@
 package tps.tp4;
 
 import java.awt.Color;
+import java.awt.Dimension;
+import java.util.Arrays;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 public class Jogo extends JFrame {
 	private static final long serialVersionUID = -6389135636258189807L;
-	private Tabuleiro tabuleiro;
+	//private Tabuleiro tabuleiro;
 
 	//public Jogo() {
 	//	init();
@@ -28,42 +29,45 @@ public class Jogo extends JFrame {
 
 	public static void init() {
 		JFrame frame  = new JFrame();
-
 		frame.setTitle("ConnectAll - by Joao Olival");
-		frame.setSize(600, 600);
+		frame.setSize(800, 800);
 		// to center a frame
 		frame.setLocationRelativeTo(null);
 		// set default close operation
 		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		// GridLayout gl = new GridLayout(1, 1, 5, 5);
 		// frame.setLayout(gl);
-		// puts the frame visible (is not visible at start)
-		frame.setVisible(true);
 		// life goes on
 		System.out.println("Frame created...");
 		
-		//frame.initTabuleiro();
-		
-		JPanel test = new JPanel();
-		test.setOpaque(true);
-		test.setBackground(new Color(0x2DD0D0));
+		Tabuleiro test = initTabuleiro();
+		for (int i = 0; i < test.getGrids().length; i++) {
+			for (int j = 0; j < test.getGrids()[0].length; j++){
+				System.out.println( test.getGrids()[i][j].getElemento().getNome());
+			}
+		}
 		frame.add(test);
-
+	
+		frame.setMinimumSize(new Dimension(400, 400));
+		// puts the frame visible (is not visible at start)
+		frame.setVisible(true);
 	}
 
-	private void initTabuleiro() {
+	private static Tabuleiro initTabuleiro() {
 		Quadricula[][] quad = new Quadricula[5][5];
 		for (int i = 0; i < quad.length; i++) {
 			for (int j = 0; j < quad.length; j++) {
 				quad[i][j] = new Quadricula(i, j);
 			}
 		}
-		this.tabuleiro = new TabuleiroDim5(quad);
-		add(this.tabuleiro);
+		Tabuleiro tabuleiro = new TabuleiroDim5(quad);
+		//add(tabuleiro);
 		
-		Peca peca1 = new Peca(Color.BLUE);
+		Peca peca1 = new Peca(Color.RED);
 		
-		this.tabuleiro.setElemento(4, 2, peca1);
+		tabuleiro.setElemento(0, 0, peca1);
+		
+		return tabuleiro;
 	}
 
 }

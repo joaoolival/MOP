@@ -15,8 +15,11 @@ public abstract class Elemento extends JLabel {
 
 	public Elemento(Color cor) {
 		this.cor = cor;
-		setBackground(BACKGROUNDCOLOR);
 		setOpaque(true);
+		setBackground(this.cor);
+		setText("enter text here");
+		setForeground (Color.red);
+		
 		
 		addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
@@ -26,6 +29,7 @@ public abstract class Elemento extends JLabel {
 				// if left mouse button: put ship on board
 				if (e.getButton() == MouseEvent.BUTTON1) {
 					System.out.println("left");
+					
 
 				}
 			}
@@ -33,7 +37,9 @@ public abstract class Elemento extends JLabel {
 
 	}
 	
-	@Override
-	protected abstract void paintComponent(Graphics g);
+	protected abstract String getNome();
+	
+	/*@Override
+	protected abstract void paintComponent(Graphics g);*/
 
 }

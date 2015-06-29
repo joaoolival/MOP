@@ -1,7 +1,10 @@
 package tps.tp4;
 
+import java.awt.Color;
 import java.awt.GridLayout;
+import java.util.Random;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class Tabuleiro extends JPanel {
@@ -18,7 +21,9 @@ public class Tabuleiro extends JPanel {
 		if (quadriculas.length == nRows && quadriculas[0].length == nCols) {
 			this.quadriculas = quadriculas;
 			setQuad();
-			setOpaque(true);
+			//setOpaque(true);
+			setBackground(Color.yellow);
+			//setBorder(new LineBorder(Color.orange, 15));
 		}	
 	}
 	
@@ -31,8 +36,15 @@ public class Tabuleiro extends JPanel {
 	}
 	
 	public void setElemento(int x,int y, Elemento elemento){
-		quadriculas[y][x].setElemento(elemento); 
-		repaint();
+		quadriculas[y][x].setElemento(elemento);
+		removeAll(); 
+		// refresh the panel.
+		updateUI();
+		setQuad();
+		//add(quadriculas[y][x].getElemento(),x*y);
+		//quadriculas[y][x].getElemento().setVisible(true);
+		//revalidate();
+		//repaint();
 	}
 	
 	public Quadricula[][] getGrids(){

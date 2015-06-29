@@ -33,7 +33,6 @@ public class Quadricula {
 	
 	public void setElemento(Elemento elemento){
 		this.elemento = elemento;
-		
 	}
 
 
