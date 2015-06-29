@@ -1,37 +1,41 @@
 package tps.tp4;
 
-import java.awt.Color;
 import java.awt.GridLayout;
-import java.util.Random;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-import javax.swing.WindowConstants;
-import javax.swing.border.LineBorder;
 
-public class Tabuleiro<E> extends JPanel {
-
-	private E[][] grids;
+public class Tabuleiro extends JPanel {
+	private static final long serialVersionUID = -2644847326361294863L;
+	private Quadricula[][] quadriculas;
 	
-	//grids vai ser array de quadriculas
-	Tabuleiro(E[][] grids, int nRows, int nCols) {
+	public Tabuleiro(Quadricula[][] quadriculas, int nRows, int nCols) {
+		
 		GridLayout gl1 = new GridLayout(nRows, nCols);
 		setLayout(gl1);
 		gl1.setVgap(2);
 		gl1.setHgap(2);
-
-		if (grids.length == nRows && grids[0].length == nCols) {
-			this.grids = grids;
+		
+		if (quadriculas.length == nRows && quadriculas[0].length == nCols) {
+			this.quadriculas = quadriculas;
+			setQuad();
+			setOpaque(true);
+		}	
+	}
+	
+	private void setQuad(){
+		for (int i = 0; i < quadriculas.length; i++) {
+			for (int j = 0; j < quadriculas.length; j++) {
+				add(quadriculas[i][j].getElemento());
+			}
 		}
 	}
 	
-	void setQuad(E quad,int posX,int posY){
-		this.grids[posY][posX] = quad;
+	public void setElemento(int x,int y, Elemento elemento){
+		quadriculas[y][x].setElemento(elemento); 
+		repaint();
 	}
 	
-	E[][] getGrids(){
-		return this.grids;
+	public Quadricula[][] getGrids(){
+		return quadriculas;
 	}
 }

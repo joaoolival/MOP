@@ -1,17 +1,10 @@
 package tps.tp4;
-import java.awt.GridLayout;
 
-import javax.swing.JFrame;
-import javax.swing.WindowConstants;
+public class TabuleiroDim5 extends Tabuleiro{
+	private static final long serialVersionUID = 6784824663872156802L;
 
-public class TabuleiroDim5<E> extends Tabuleiro{
-
-	
-	TabuleiroDim5(E[][]grids){
-		super(grids,5,5);
+	public TabuleiroDim5(Quadricula[][] quadriculas){
+		super(quadriculas,5,5);
 	}
-	
-	//public void setGrid(){
-		
-	//}
+
 }
