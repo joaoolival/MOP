@@ -12,11 +12,13 @@ public class Quadricula {
 	private int x;
 	private int y;
 	private Elemento elemento;
+	private Tabuleiro tabuleiro;
 
-	public Quadricula(int x, int y) {
+	public Quadricula(int x, int y,Tabuleiro tabuleiro) {
 		this.x = x;
 		this.y = y;
-		this.elemento = new ElementoVazio();
+		this.elemento = new ElementoVazio(this);
+		this.tabuleiro = tabuleiro;
 	}
 
 	int getTabX() {
@@ -33,6 +35,14 @@ public class Quadricula {
 	
 	public void setElemento(Elemento elemento){
 		this.elemento = elemento;
+		tabuleiro.removeAll(); 
+		// refresh the panel.
+		tabuleiro.updateUI();
+		tabuleiro.setQuad();
+		//add(quadriculas[y][x].getElemento(),x*y);
+		//quadriculas[y][x].getElemento().setVisible(true);
+		//revalidate();
+		//repaint();
 	}
 
 

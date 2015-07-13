@@ -1,8 +1,6 @@
 package tps.tp4;
 
-import java.awt.Color;
 import java.awt.Dimension;
-import java.util.Arrays;
 
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
@@ -54,18 +52,11 @@ public class Jogo extends JFrame {
 	}
 
 	private static Tabuleiro initTabuleiro() {
-		Quadricula[][] quad = new Quadricula[5][5];
-		for (int i = 0; i < quad.length; i++) {
-			for (int j = 0; j < quad.length; j++) {
-				quad[i][j] = new Quadricula(i, j);
-			}
-		}
-		Tabuleiro tabuleiro = new TabuleiroDim5(quad);
-		//add(tabuleiro);
 		
-		Peca peca1 = new Peca(Color.RED);
+		Tabuleiro tabuleiro = new TabuleiroDim5();
 		
-		tabuleiro.setElemento(0, 0, peca1);
+		//Peca peca1 = new Peca(tabuleiro.getQuadricula(0, 0), Color.RED);
+		//tabuleiro.setElemento(0, 0, peca1);
 		
 		return tabuleiro;
 	}
