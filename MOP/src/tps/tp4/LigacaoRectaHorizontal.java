@@ -3,11 +3,11 @@ package tps.tp4;
 import java.awt.Color;
 import java.awt.Graphics;
 
-public class LigacaoRectaVertical extends LigacaoRecta {
-	private static final long serialVersionUID = 1L;
+public class LigacaoRectaHorizontal extends LigacaoRecta {
+	private static final long serialVersionUID = -1063818420669798300L;
 	private String nome;
 
-	public LigacaoRectaVertical(Quadricula quadricula,Color cor) {
+	public LigacaoRectaHorizontal(Quadricula quadricula,Color cor) {
 		super(cor,quadricula);
 		this.nome = "LigacaoRectaVertical";
 	}
@@ -20,7 +20,7 @@ public class LigacaoRectaVertical extends LigacaoRecta {
 		super.paintComponent(g);
 
 		g.setColor(getCor());
-		g.fillRect(getWidth()/4, 0, getWidth()/2, getHeight());
+		g.fillRect(0, getWidth()/4, getWidth(), getHeight()/2);
 	}
 
 }

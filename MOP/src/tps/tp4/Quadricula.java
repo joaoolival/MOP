@@ -13,12 +13,12 @@ public class Quadricula {
 	private int y;
 	private Elemento elemento;
 	private Tabuleiro tabuleiro;
-
-	public Quadricula(int x, int y,Tabuleiro tabuleiro) {
+	public Quadricula(Tabuleiro tabuleiro,int x, int y) {
+		this.tabuleiro = tabuleiro;
 		this.x = x;
 		this.y = y;
 		this.elemento = new ElementoVazio(this);
-		this.tabuleiro = tabuleiro;
+		
 	}
 
 	int getTabX() {
@@ -43,6 +43,14 @@ public class Quadricula {
 		//quadriculas[y][x].getElemento().setVisible(true);
 		//revalidate();
 		//repaint();
+		
+	}
+	
+	public boolean equals(Quadricula quadricula){
+		if(x == quadricula.getTabX() && y == quadricula.getTabY()){
+			return true;
+		}
+		return false;
 	}
 
 

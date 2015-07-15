@@ -6,25 +6,54 @@ import javax.swing.JLabel;
 
 public abstract class Elemento extends JLabel {
 	private static final long serialVersionUID = -3509712629827253893L;
-	static final Color BACKGROUNDCOLOR = new Color(50, 50, 50);
 	
-	protected Color cor;
+	static final Color BACKGROUNDCOLOR = new Color(50, 50, 50);
+	private CorDasPecas[] corDasPecas;
+	private Color cor;
+	private Quadricula quadricula;
+	
 
-	public Elemento(Color cor) {
+	public Elemento(Color cor, Quadricula quadricula) {
 		this.cor = cor;
+		this.corDasPecas = CorDasPecas.values();
+		this.quadricula = quadricula;
 		setOpaque(true);
-		
 		setBackground(BACKGROUNDCOLOR);
-		//setText("enter text here");
-		//setForeground (Color.red);
-
 	}
 	
-	protected abstract String getNome();
+	public abstract String getNome();
+	
+	public Color getCor(){
+		return cor;
+	}
+	
+	public Quadricula getQuadricula(){
+		return quadricula;
+	}
+	
+	public CorDasPecas[] getArrayCores(){
+		return corDasPecas;
+	}
+	
+	public boolean podeEntrar(int valorActual){
+		return false;
+	}
+	
+	public boolean equals(Elemento elemento){
+		if(getNome().equals(elemento.getNome())){
+			if(getCor().equals(elemento.getCor()) && getQuadricula().equals(elemento.getQuadricula())){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
+	
 	
 	/*@Override
 	protected abstract void paintComponent(Graphics g);*/
-	enum Colors {
+	enum CorDasPecas {
 		Color1(203, 37, 41),
 		Color2(198, 86, 49),
 		Color3(200, 123, 31),
@@ -51,7 +80,7 @@ public abstract class Elemento extends JLabel {
 	    private int blue;
 	    private int green;
 
-	    private Colors(int r, int g, int b) {
+	    private CorDasPecas(int r, int g, int b) {
 	        this.red = r;
 	        this.green = g;
 	        this.blue = b;
@@ -68,7 +97,6 @@ public abstract class Elemento extends JLabel {
 	    public int getGreenValue() {
 	        return green;
 	    }
-		// PRIMAVERA(), VERAO(), OUTONO(), INVERNO()
 	}
 
 }

@@ -19,13 +19,12 @@ public class Tabuleiro extends JPanel {
 		Quadricula[][] quadriculas = new Quadricula[5][5];
 		for (int i = 0; i < quadriculas.length; i++) {
 			for (int j = 0; j < quadriculas.length; j++) {
-				quadriculas[i][j] = new Quadricula(i, j,this);
+				quadriculas[i][j] = new Quadricula(this,i, j);
 			}
 		}
 		this.quadriculas = quadriculas;
 		setQuad();
 		setBackground(Color.yellow);
-		
 	}
 	
 	public void setQuad(){
@@ -42,7 +41,6 @@ public class Tabuleiro extends JPanel {
 	
 	public void setElemento(int x,int y, Elemento elemento){
 		quadriculas[y][x].setElemento(elemento);
-		
 	}
 	
 	public Quadricula[][] getGrids(){

@@ -6,20 +6,17 @@ import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import tps.tp4.Elemento.Colors;
-
 public class Peca extends Elemento {
 	private static final long serialVersionUID = -8277228317521251913L;
 	private String nome;
-	private Colors[] colors;
+	
+	
 
 	public Peca(Quadricula quadricula, Color cor) {
-		super(cor);
+		super(cor, quadricula);
 		this.nome = "Peca";
-		this.colors = Colors.values();
 		
 		
-
 		addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getButton() == MouseEvent.BUTTON3) {
@@ -32,21 +29,20 @@ public class Peca extends Elemento {
 
 				}
 			}
-		});
-		
-		
+		});	
 	}
 
 	public String getNome() {
 		return nome;
 	}
+	
 
-	protected void paintComponent(Graphics g) {
+	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
-		g.setColor(cor);
+		g.setColor(getCor());
 		g.fillOval(0, 0, getWidth(), getHeight());
-		g.setColor(new Color(colors[2].getRedValue(),colors[2].getGreenValue(),colors[2].getBlueValue()));
+		g.setColor(new Color(0,0,0));
 		g.fillOval(25, 25, getWidth() - 50, getHeight() - 50);
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("Monospace", Font.BOLD, getHeight()/2+getHeight()/5));
