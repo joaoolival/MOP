@@ -16,6 +16,7 @@ public class Trajecto {
 	public void apagaElemento(Elemento elemento){
 		colocados.remove(elemento);
 	}
+	
 	public Elemento getElemento(int x, int y){
 		for(Elemento elementoColocado: colocados){
 			if(elementoColocado.equals(tabuleiro.getQuadricula(x, y).getElemento())){
@@ -24,6 +25,29 @@ public class Trajecto {
 		}
 		return null;
 	}
+	
+	public ArrayList<Elemento> getColocados(){
+		return colocados;
+	}
+	
+	public Elemento getUltimoElemento(){
+		if (colocados != null && !colocados.isEmpty()) {
+			return colocados.get(colocados.size()-1);
+			}
+		return null;
+	}
+	
+	public void setUltimoElemento(Elemento elemento){
+		colocados.set(colocados.size()-1,elemento);
+	}
+	
+	public boolean estaVazio(){
+		if(colocados.isEmpty()){
+			return true;
+		}
+		return false;
+	}
+	
 	
 	
 

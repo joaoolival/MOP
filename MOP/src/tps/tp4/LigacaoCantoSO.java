@@ -1,6 +1,7 @@
 package tps.tp4;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 
 public class LigacaoCantoSO extends LigacaoCanto {
@@ -22,5 +23,9 @@ public class LigacaoCantoSO extends LigacaoCanto {
 		g.setColor(getCor());
 		g.fillRect(getWidth()/4, getHeight()/4, getWidth()/2, getHeight()-(getHeight()/4));
 		g.fillRect(0, getHeight()/4, getWidth()/2, getHeight()/2+1);
+		
+		g.setColor(Color.WHITE);
+		g.setFont(new Font("Monospace", Font.BOLD, 20));
+		g.drawString(Integer.toString(quadricula.getTabY()) + " , "+Integer.toString(quadricula.getTabX()) , getWidth()/2, getHeight()/2);
 	}
 }

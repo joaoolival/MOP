@@ -10,15 +10,17 @@ public abstract class Elemento extends JLabel {
 	static final Color BACKGROUNDCOLOR = new Color(50, 50, 50);
 	private CorDasPecas[] corDasPecas;
 	private Color cor;
-	private Quadricula quadricula;
+	protected Quadricula quadricula;
 	
 
 	public Elemento(Color cor, Quadricula quadricula) {
 		this.cor = cor;
 		this.corDasPecas = CorDasPecas.values();
 		this.quadricula = quadricula;
+		
 		setOpaque(true);
 		setBackground(BACKGROUNDCOLOR);
+		
 	}
 	
 	public abstract String getNome();
