@@ -37,6 +37,15 @@ public class Trajecto {
 		return null;
 	}
 	
+	public Elemento getPenultimoElemento(){
+		if (colocados != null && colocados.size() >= 2) {
+			return colocados.get(colocados.size()-2);
+			}
+		return null;
+	}
+	
+	
+	
 	public void setUltimoElemento(Elemento elemento){
 		colocados.set(colocados.size()-1,elemento);
 	}

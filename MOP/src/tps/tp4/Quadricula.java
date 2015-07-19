@@ -54,47 +54,87 @@ public class Quadricula {
 
 	public void setLigacao() {
 		Trajecto auxTrajecto = tabuleiro.getTrajecto();
-		Elemento auxElemento = auxTrajecto.getUltimoElemento();
 		
-		int auxX = auxElemento.getQuadricula().getTabX();
-		int auxY = auxElemento.getQuadricula().getTabY();
+		Elemento ultimo = auxTrajecto.getUltimoElemento();
+		Elemento penultimo = auxTrajecto.getPenultimoElemento();
+		
+		int ultimoX = ultimo.getQuadricula().getTabX();
+		int ultimoY = ultimo.getQuadricula().getTabY();
+		
+		int penultimoX = -1;
+		int penultimoY = -1;
+		
+		if(penultimo != null){
+		penultimoX = penultimo.getQuadricula().getTabX();
+		penultimoY = penultimo.getQuadricula().getTabY();
+		}
+		
+		
 		Color auxColor = new Color(
 				elemento.getArrayCores()[0].getRedValue(),
 				elemento.getArrayCores()[0].getGreenValue(),
 				elemento.getArrayCores()[0].getBlueValue());
 
-		if (auxY == y && (auxX + 1 == x || auxX - 1 == x)) {
-			if (auxElemento instanceof LigacaoRectaVertical) {
-				if (auxX + 1 == x) {
-					Elemento novoElemento = new LigacaoCantoNE(tabuleiro.getQuadricula(auxX, auxY),auxColor);
-					tabuleiro.getQuadricula(auxX, auxY)
-							.setElemento(novoElemento);
-					tabuleiro.getTrajecto().setUltimoElemento(novoElemento);
+		if (ultimoY == y && (ultimoX + 1 == x || ultimoX - 1 == x)) {
+			if (ultimo instanceof LigacaoRectaVertical) {
+				if (ultimoX < x) {
+					if(penultimoY != -1 && penultimoY < ultimoY){
+						Elemento novoElemento = new LigacaoCantoNE(tabuleiro.getQuadricula(ultimoX, ultimoY),auxColor);
+						tabuleiro.getQuadricula(ultimoX, ultimoY)
+								.setElemento(novoElemento);
+						tabuleiro.getTrajecto().setUltimoElemento(novoElemento);
+					}else if(penultimoY != -1 && penultimoY > ultimoY){
+						Elemento novoElemento = new LigacaoCantoSE(tabuleiro.getQuadricula(ultimoX, ultimoY),auxColor);
+						tabuleiro.getQuadricula(ultimoX, ultimoY)
+								.setElemento(novoElemento);
+						tabuleiro.getTrajecto().setUltimoElemento(novoElemento);
+					}
 				}
-				else if(auxX - 1 == x){
-					Elemento novoElemento = new LigacaoCantoNO(tabuleiro.getQuadricula(auxX, auxY),auxColor);
-					tabuleiro.getQuadricula(auxX, auxY)
-							.setElemento(novoElemento);
-					tabuleiro.getTrajecto().setUltimoElemento(novoElemento);
+				else if(ultimoX > x){
+					if(penultimoY != -1 && penultimoY < ultimoY){
+						Elemento novoElemento = new LigacaoCantoNO(tabuleiro.getQuadricula(ultimoX, ultimoY),auxColor);
+						tabuleiro.getQuadricula(ultimoX, ultimoY)
+								.setElemento(novoElemento);
+						tabuleiro.getTrajecto().setUltimoElemento(novoElemento);
+					}else if(penultimoY != -1 && penultimoY > ultimoY){
+						Elemento novoElemento = new LigacaoCantoSO(tabuleiro.getQuadricula(ultimoX, ultimoY),auxColor);
+						tabuleiro.getQuadricula(ultimoX, ultimoY)
+								.setElemento(novoElemento);
+						tabuleiro.getTrajecto().setUltimoElemento(novoElemento);
+					}
 				}
 			}
 			this.elemento = new LigacaoRectaHorizontal(this, auxColor);
 			tabuleiro.getTrajecto().setElemento(elemento);
 		}
 
-		if (auxX == x && (auxY + 1 == y || auxY - 1 == y)) {
-			if (auxElemento instanceof LigacaoRectaHorizontal) {
-				if (auxY + 1 == y) {
-					Elemento novoElemento = new LigacaoCantoSE(tabuleiro.getQuadricula(auxX, auxY),auxColor);
-					tabuleiro.getQuadricula(auxX, auxY)
-							.setElemento(novoElemento);
-					tabuleiro.getTrajecto().setUltimoElemento(novoElemento);
+		if (ultimoX == x && (ultimoY + 1 == y || ultimoY - 1 == y)) {
+			if (ultimo instanceof LigacaoRectaHorizontal) {
+				if (ultimoY < y) {
+					if(penultimoX != -1 && penultimoX < ultimoX){
+						Elemento novoElemento = new LigacaoCantoSO(tabuleiro.getQuadricula(ultimoX, ultimoY),auxColor);
+						tabuleiro.getQuadricula(ultimoX, ultimoY)
+								.setElemento(novoElemento);
+						tabuleiro.getTrajecto().setUltimoElemento(novoElemento);
+					}else if(penultimoX != -1 && penultimoX > ultimoX){
+						Elemento novoElemento = new LigacaoCantoSE(tabuleiro.getQuadricula(ultimoX, ultimoY),auxColor);
+						tabuleiro.getQuadricula(ultimoX, ultimoY)
+								.setElemento(novoElemento);
+						tabuleiro.getTrajecto().setUltimoElemento(novoElemento);
+					}
 				}
-				else if(auxY - 1 == y){
-					Elemento novoElemento = new LigacaoCantoSO(tabuleiro.getQuadricula(auxX, auxY),auxColor);
-					tabuleiro.getQuadricula(auxX, auxY)
-							.setElemento(novoElemento);
-					tabuleiro.getTrajecto().setUltimoElemento(novoElemento);
+				else if(ultimoY > y){
+					if(penultimoX != -1 && penultimoX < ultimoX){
+						Elemento novoElemento = new LigacaoCantoNO(tabuleiro.getQuadricula(ultimoX, ultimoY),auxColor);
+						tabuleiro.getQuadricula(ultimoX, ultimoY)
+								.setElemento(novoElemento);
+						tabuleiro.getTrajecto().setUltimoElemento(novoElemento);
+					}else if(penultimoX != -1 && penultimoX > ultimoX){
+						Elemento novoElemento = new LigacaoCantoNE(tabuleiro.getQuadricula(ultimoX, ultimoY),auxColor);
+						tabuleiro.getQuadricula(ultimoX, ultimoY)
+								.setElemento(novoElemento);
+						tabuleiro.getTrajecto().setUltimoElemento(novoElemento);
+					}
 				}
 			}
 			this.elemento = new LigacaoRectaVertical(this, auxColor);
