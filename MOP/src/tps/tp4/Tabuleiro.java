@@ -46,24 +46,19 @@ public class Tabuleiro extends JPanel {
 		while (fileScan.hasNextLine()) {
 
 			String line = fileScan.nextLine();
-
 			Scanner lineScan = new Scanner(line);
-			// ver se a linha e null
+
 			while (lineScan.hasNext()) {
-				System.out.println(lineScan.next());
-				/*if (lineScan.hasNextInt()) {
-					if (waitDim) {
-						int dim = lineScan.nextInt();
-						waitDim = false;
-					}
-					System.out.println("entre");
+				if(waitDim && lineScan.next().equals("dim")){
+					System.out.println(lineScan.nextInt());
+					waitDim = false;
+				}
+				if(lineScan.next().equals("peca")){
 					int x = lineScan.nextInt();
 					int y = lineScan.nextInt();
-
-					System.out.println(x);
-					System.out.println(y);
-
-				}*/
+					setElemento(x, y, new Peca(getQuadricula(x, y),Color.BLUE));
+				}
+				
 			}
 			lineScan.close();
 		}
