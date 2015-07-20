@@ -1,6 +1,7 @@
 package tps.tp4;
 
 import java.awt.Dimension;
+import java.io.FileNotFoundException;
 
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
@@ -18,14 +19,19 @@ public class Jogo extends JFrame {
 		// creating and showing this application's GUI.
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				init();
+				try {
+					init();
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				//new Jogo();
 			}
 		});
 		System.out.println("End of main...");
 	}
 
-	public static void init() {
+	public static void init() throws FileNotFoundException {
 		JFrame frame  = new JFrame();
 		frame.setTitle("ConnectAll - by Joao Olival");
 		frame.setSize(800, 800);
@@ -39,11 +45,11 @@ public class Jogo extends JFrame {
 		System.out.println("Frame created...");
 		
 		Tabuleiro test = initTabuleiro();
-		for (int i = 0; i < test.getGrids().length; i++) {
+		/*for (int i = 0; i < test.getGrids().length; i++) {
 			for (int j = 0; j < test.getGrids()[0].length; j++){
 				System.out.println( test.getGrids()[i][j].getElemento().getNome());
 			}
-		}
+		}*/
 		frame.add(test);
 	
 		frame.setMinimumSize(new Dimension(400, 400));
@@ -51,7 +57,7 @@ public class Jogo extends JFrame {
 		frame.setVisible(true);
 	}
 
-	private static Tabuleiro initTabuleiro() {
+	private static Tabuleiro initTabuleiro() throws FileNotFoundException {
 		
 		Tabuleiro tabuleiro = new TabuleiroDim5();
 		
