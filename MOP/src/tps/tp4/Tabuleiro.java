@@ -42,6 +42,7 @@ public class Tabuleiro extends JPanel {
 				"C:\\Users\\Joao\\git\\MOP\\MOP\\src\\tps\\tp4\\levels\\55NotSoEasy\\55NotSoEasy_01.txt");
 		Scanner fileScan = new Scanner(file);
 		boolean waitDim = true;
+		int numero = 1;
 
 		while (fileScan.hasNextLine()) {
 
@@ -56,7 +57,9 @@ public class Tabuleiro extends JPanel {
 				if(lineScan.next().equals("peca")){
 					int x = lineScan.nextInt();
 					int y = lineScan.nextInt();
-					setElemento(x, y, new Peca(getQuadricula(x, y),Color.BLUE));
+					System.out.println(x + ", " + y);
+					setElemento(x, y, new Peca(getQuadricula(x, y),Color.BLUE,numero));
+					numero ++;
 				}
 				
 			}
