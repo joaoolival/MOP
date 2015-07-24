@@ -12,6 +12,7 @@ public class Tabuleiro extends JPanel {
 	private static final long serialVersionUID = -2644847326361294863L;
 	private Quadricula[][] quadriculas;
 	private Trajecto trajecto;
+	private int numeroCor;
 
 	public Tabuleiro(int nRows, int nCols) throws FileNotFoundException {
 
@@ -30,7 +31,16 @@ public class Tabuleiro extends JPanel {
 		setQuad();
 		setBackground(Color.yellow);
 		this.trajecto = new Trajecto(this);
+		this.numeroCor = 1;
 		setPecas();
+	}
+	
+	public int getNumeroCor(){
+		return numeroCor;
+	}
+	
+	public void aumentaNumeroCor(){
+		numeroCor++;
 	}
 
 	public Trajecto getTrajecto() {
@@ -42,7 +52,7 @@ public class Tabuleiro extends JPanel {
 				"C:\\Users\\Joao\\git\\MOP\\MOP\\src\\tps\\tp4\\levels\\55NotSoEasy\\55NotSoEasy_01.txt");
 		Scanner fileScan = new Scanner(file);
 		boolean waitDim = true;
-		int numero = 1;
+		int numeroPeca = 1;
 
 		while (fileScan.hasNextLine()) {
 
@@ -50,18 +60,28 @@ public class Tabuleiro extends JPanel {
 			Scanner lineScan = new Scanner(line);
 
 			while (lineScan.hasNext()) {
-				if(waitDim && lineScan.next().equals("dim")){
-					System.out.println(lineScan.nextInt());
+				if (waitDim && lineScan.next().equals("dim")) {
 					waitDim = false;
 				}
-				if(lineScan.next().equals("peca")){
+				if (lineScan.next().equals("peca")) {
 					int x = lineScan.nextInt();
 					int y = lineScan.nextInt();
-					System.out.println(x + ", " + y);
-					setElemento(x, y, new Peca(getQuadricula(x, y),Color.BLUE,numero));
-					numero ++;
+					Elemento auxElemento = getQuadricula(x, y).getElemento();
+					Color cor = new Color(
+							auxElemento.getArrayCores()[numeroPeca - 1]
+									.getRedValue(),
+							auxElemento.getArrayCores()[numeroPeca - 1]
+									.getGreenValue(), auxElemento
+									.getArrayCores()[numeroPeca - 1].getBlueValue());
+					setElemento(x, y,
+							new Peca(getQuadricula(x, y), cor, numeroPeca));
+					if (numeroPeca == 1) {
+						trajecto.setElemento(getQuadricula(x, y).getElemento());
+						trajecto.aumentaEstadoPeca();
+					}
+					numeroPeca++;
 				}
-				
+
 			}
 			lineScan.close();
 		}

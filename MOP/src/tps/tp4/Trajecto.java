@@ -5,9 +5,19 @@ import java.util.ArrayList;
 public class Trajecto {
 	private ArrayList<Elemento> colocados = new ArrayList<Elemento>();
 	private Tabuleiro tabuleiro;
+	private int estadoPeca;
 	
 	public Trajecto(Tabuleiro tabuleiro){
 		this.tabuleiro = tabuleiro;
+		this.estadoPeca = 0;
+	}
+	
+	public int getEstadoPeca(){
+		return estadoPeca;
+	}
+	
+	public void aumentaEstadoPeca(){
+		estadoPeca++;
 	}
 	
 	public void setElemento(Elemento elemento){

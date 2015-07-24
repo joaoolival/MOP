@@ -20,22 +20,25 @@ public class ElementoVazio extends Elemento {
 
 				}
 				if (e.getButton() == MouseEvent.BUTTON1) {
-					/*quadricula.setElemento(new LigacaoCantoSO(quadricula,
-							new Color(getArrayCores()[0].getRedValue(),
-									getArrayCores()[0].getGreenValue(),
-									getArrayCores()[0].getBlueValue())));*/
+					/*
+					 * quadricula.setElemento(new LigacaoCantoSO(quadricula, new
+					 * Color(getArrayCores()[0].getRedValue(),
+					 * getArrayCores()[0].getGreenValue(),
+					 * getArrayCores()[0].getBlueValue())));
+					 */
 					Tabuleiro auxTabuleiro = quadricula.getTabuleiro();
 					Trajecto auxTrajecto = auxTabuleiro.getTrajecto();
-					
-					if(auxTrajecto.estaVazio()){
-						quadricula.setElemento(new LigacaoRectaHorizontal(quadricula,
-								new Color(getArrayCores()[0].getRedValue(),
-										getArrayCores()[0].getGreenValue(),
-										getArrayCores()[0].getBlueValue())));
-					}else{
-						quadricula.setLigacao();
-					}
-					
+
+					/*
+					 * if(auxTrajecto.estaVazio()){ quadricula.setElemento(new
+					 * LigacaoRectaHorizontal(quadricula, new
+					 * Color(getArrayCores()[0].getRedValue(),
+					 * getArrayCores()[0].getGreenValue(),
+					 * getArrayCores()[0].getBlueValue()))); }
+					 */
+
+					quadricula.setLigacao();
+
 				}
 			}
 		});
@@ -44,9 +47,9 @@ public class ElementoVazio extends Elemento {
 	public String getNome() {
 		return nome;
 	}
-	
-	public boolean podeEntrar(int currentValue){
-		
+
+	public boolean podeEntrar(int currentValue) {
+
 		return false;
 	}
 

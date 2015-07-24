@@ -27,6 +27,10 @@ public class Peca extends Elemento {
 				}
 				if (e.getButton() == MouseEvent.BUTTON1) {
 					// System.out.println("left");
+					if(quadricula.setPeca(numero)){
+						aumentaNumero();
+					};
+					
 					
 
 				}
@@ -36,6 +40,10 @@ public class Peca extends Elemento {
 	
 	public int getNumero(){
 		return numero;
+	}
+	
+	public void aumentaNumero(){
+		numero++;
 	}
 
 	public String getNome() {
