@@ -65,6 +65,7 @@ public class Quadricula {
 			auxTrajecto.setElemento(elemento);
 			auxTrajecto.aumentaEstadoPeca();
 			System.out.println(numero);
+			tabuleiro.aumentaNumeroCor();
 			
 		}
 		return false;
