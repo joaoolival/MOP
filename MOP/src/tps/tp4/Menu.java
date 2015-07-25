@@ -43,6 +43,26 @@ public class Menu extends JPanel {
 		};
 		buttonTab4_nivel1.addActionListener(tab4listener);
 		
+		JButton buttonTab5_nivel1 = new JButton("5x5 - Nivel 1");
+		buttonTab5_nivel1.setActionCommand("newgame");
+		add(buttonTab5_nivel1);
+		
+		ActionListener tab5listener = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					apagaFrame();
+					File file = new File(
+							"C:\\Users\\Joao\\git\\MOP\\MOP\\src\\tps\\tp4\\levels\\55NotSoEasy\\55NotSoEasy_01.txt");
+					geraTab5(file);
+					resetFrame();
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		};
+		buttonTab5_nivel1.addActionListener(tab5listener);
+		
 		
 		JButton buttonTab6_nivel1 = new JButton("6x6 - Nivel 1");
 		buttonTab4_nivel1.setActionCommand("newgame");
@@ -63,6 +83,68 @@ public class Menu extends JPanel {
 			}
 		};
 		buttonTab6_nivel1.addActionListener(tab6listener);
+		
+		
+		JButton buttonTab7_nivel1 = new JButton("7x7 - Nivel 1");
+		buttonTab7_nivel1.setActionCommand("newgame");
+		add(buttonTab7_nivel1);
+		
+		ActionListener tab7listener = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					apagaFrame();
+					File file = new File(
+							"C:\\Users\\Joao\\git\\MOP\\MOP\\src\\tps\\tp4\\levels\\77NotSoMedium\\77NotSoMedium_01.txt");
+					geraTab7(file);
+					resetFrame();
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		};
+		buttonTab7_nivel1.addActionListener(tab7listener);
+		
+		
+		JButton buttonTab8_nivel1 = new JButton("8x8 - Nivel 1");
+		buttonTab8_nivel1.setActionCommand("newgame");
+		add(buttonTab8_nivel1);
+		
+		ActionListener tab8listener = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					apagaFrame();
+					File file = new File(
+							"C:\\Users\\Joao\\git\\MOP\\MOP\\src\\tps\\tp4\\levels\\88Hard\\88Hard_01.txt");
+					geraTab8(file);
+					resetFrame();
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		};
+		buttonTab8_nivel1.addActionListener(tab8listener);
+		
+		JButton buttonTab9_nivel1 = new JButton("9x9 - Nivel 1");
+		buttonTab9_nivel1.setActionCommand("newgame");
+		add(buttonTab9_nivel1);
+		
+		ActionListener tab9listener = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					apagaFrame();
+					File file = new File(
+							"C:\\Users\\Joao\\git\\MOP\\MOP\\src\\tps\\tp4\\levels\\99VeryHard\\99VeryHard_01.txt");
+					geraTab9(file);
+					resetFrame();
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		};
+		buttonTab9_nivel1.addActionListener(tab9listener);
 	}
 	
 	public boolean getCreateGame(){
