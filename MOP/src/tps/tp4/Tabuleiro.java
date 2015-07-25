@@ -14,7 +14,7 @@ public class Tabuleiro extends JPanel {
 	private Trajecto trajecto;
 	private int numeroCor;
 
-	public Tabuleiro(int nRows, int nCols) throws FileNotFoundException {
+	public Tabuleiro(int nRows, int nCols, File file) throws FileNotFoundException {
 
 		GridLayout gl1 = new GridLayout(nRows, nCols);
 		setLayout(gl1);
@@ -32,7 +32,7 @@ public class Tabuleiro extends JPanel {
 		setBackground(Color.yellow);
 		this.trajecto = new Trajecto(this);
 		this.numeroCor = 1;
-		setPecas();
+		setPecas(file);
 	}
 	
 	public int getNumeroCor(){
@@ -47,9 +47,8 @@ public class Tabuleiro extends JPanel {
 		return trajecto;
 	}
 
-	public void setPecas() throws FileNotFoundException {
-		File file = new File(
-				"C:\\Users\\Joao\\git\\MOP\\MOP\\src\\tps\\tp4\\levels\\55NotSoEasy\\55NotSoEasy_01.txt");
+	public void setPecas(File file) throws FileNotFoundException {
+		
 		Scanner fileScan = new Scanner(file);
 		boolean waitDim = true;
 		int numeroPeca = 1;

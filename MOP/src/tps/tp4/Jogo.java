@@ -9,11 +9,32 @@ import javax.swing.WindowConstants;
 public class Jogo extends JFrame {
 	private static final long serialVersionUID = -6389135636258189807L;
 
-	// private Tabuleiro tabuleiro;
+	private JFrame frame;
 
-	// public Jogo() {
-	// init();
-	// }
+	public Jogo() throws FileNotFoundException {
+		this.frame = new JFrame();
+		frame.setTitle("ConnectAll - by Joao Olival");
+		frame.setSize(700, 700);
+		
+		frame.setLocationRelativeTo(null);
+		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		System.out.println("Frame created...");
+		
+		Menu menu = new Menu(this);
+
+		frame.add(menu);
+		frame.setMinimumSize(new Dimension(400, 400));
+		// puts the frame visible (is not visible at start)
+		frame.setVisible(true);
+	}
+	
+	public JFrame getFrame(){
+		return frame;
+	}
+	
+	public void setFrame(JFrame frame){
+		this.frame = frame;
+	}
 
 	public static void main(String[] args) {
 		// Schedule a job for the event-dispatching thread:
@@ -21,61 +42,14 @@ public class Jogo extends JFrame {
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					init();
+					Jogo jogo = new Jogo();
 				} catch (FileNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				// new Jogo();
 			}
 		});
 		System.out.println("End of main...");
-	}
-
-	public static void init() throws FileNotFoundException {
-		JFrame frame = new JFrame();
-		frame.setTitle("ConnectAll - by Joao Olival");
-		frame.setSize(800, 800);
-		// to center a frame
-		frame.setLocationRelativeTo(null);
-		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		System.out.println("Frame created...");
-
-		Menu menu = initMenu();
-		frame.add(menu);
-
-		frame.setMinimumSize(new Dimension(400, 400));
-		// puts the frame visible (is not visible at start)
-		frame.setVisible(true);
-		
-		if (menu.getCreateGame()) {
-			frame.dispose();
-			
-
-			Tabuleiro tabuleiro = initTabuleiro();
-			frame.add(tabuleiro);
-
-			frame.setMinimumSize(new Dimension(400, 400));
-			// puts the frame visible (is not visible at start)
-			frame.setVisible(true);
-
-		}
-
-	}
-
-	private static Tabuleiro initTabuleiro() throws FileNotFoundException {
-
-		Tabuleiro tabuleiro = new TabuleiroDim5();
-
-		// Peca peca1 = new Peca(tabuleiro.getQuadricula(0, 0), Color.RED);
-		// tabuleiro.setElemento(0, 0, peca1);
-
-		return tabuleiro;
-	}
-
-	private static Menu initMenu() {
-		Menu menu = new Menu();
-		return menu;
 	}
 
 }
