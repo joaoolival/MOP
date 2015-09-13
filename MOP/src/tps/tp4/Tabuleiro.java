@@ -14,7 +14,8 @@ public class Tabuleiro extends JPanel {
 	private Trajecto trajecto;
 	private int numeroCor;
 
-	public Tabuleiro(int nRows, int nCols, File file) throws FileNotFoundException {
+	public Tabuleiro(int nRows, int nCols, File file)
+			throws FileNotFoundException {
 
 		GridLayout gl1 = new GridLayout(nRows, nCols);
 		setLayout(gl1);
@@ -34,12 +35,12 @@ public class Tabuleiro extends JPanel {
 		this.numeroCor = 1;
 		setPecas(file);
 	}
-	
-	public int getNumeroCor(){
+
+	public int getNumeroCor() {
 		return numeroCor;
 	}
-	
-	public void aumentaNumeroCor(){
+
+	public void aumentaNumeroCor() {
 		numeroCor++;
 	}
 
@@ -48,7 +49,7 @@ public class Tabuleiro extends JPanel {
 	}
 
 	public void setPecas(File file) throws FileNotFoundException {
-		
+
 		Scanner fileScan = new Scanner(file);
 		boolean waitDim = true;
 		int numeroPeca = 1;
@@ -71,9 +72,10 @@ public class Tabuleiro extends JPanel {
 									.getRedValue(),
 							auxElemento.getArrayCores()[numeroPeca - 1]
 									.getGreenValue(), auxElemento
-									.getArrayCores()[numeroPeca - 1].getBlueValue());
-					setElemento(x, y,
-							new Peca(getQuadricula(x, y), cor, numeroPeca));
+									.getArrayCores()[numeroPeca - 1]
+									.getBlueValue());
+					setElemento(x, y, new Peca(getQuadricula(x, y), cor,
+							numeroPeca));
 					if (numeroPeca == 1) {
 						trajecto.setElemento(getQuadricula(x, y).getElemento());
 						trajecto.aumentaEstadoPeca();

@@ -15,11 +15,11 @@ public class Jogo extends JFrame {
 		this.frame = new JFrame();
 		frame.setTitle("ConnectAll - by Joao Olival");
 		frame.setSize(700, 700);
-		
+
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		System.out.println("Frame created...");
-		
+
 		Menu menu = new Menu(this);
 
 		frame.add(menu);
@@ -27,12 +27,12 @@ public class Jogo extends JFrame {
 		// puts the frame visible (is not visible at start)
 		frame.setVisible(true);
 	}
-	
-	public JFrame getFrame(){
+
+	public JFrame getFrame() {
 		return frame;
 	}
-	
-	public void setFrame(JFrame frame){
+
+	public void setFrame(JFrame frame) {
 		this.frame = frame;
 	}
 
